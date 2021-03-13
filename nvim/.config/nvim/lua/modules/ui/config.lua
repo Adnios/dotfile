@@ -42,7 +42,7 @@ function config.dashboard()
      command = 'DashboardFindWord'},
     find_dotfiles = {
      description = {'  Open Personal dotfiles                  SPC f d'},
-     command = 'Telescope dotfiles path=' .. home ..'/.dotfiles'},
+     command = 'Telescope dotfiles path=' .. home ..'/dotfile'},
   }
 end
 
