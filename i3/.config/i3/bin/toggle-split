@@ -1,0 +1,7 @@
+#!/bin/bash
+Layout=$(i3-msg -t get_tree | jq -r '[recurse(.nodes[])] | .[] | select(.nodes[].focused).layout')
+
+case "$layout" in
+  splith) i3-msg split h; notify-send 'horizontally' ;;
+  *) i3-msg split v; notify-send 'vertically' ;;
+esac

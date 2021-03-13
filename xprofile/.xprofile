@@ -1,0 +1,7 @@
+# --- Terminal(Kitty)
+export GLFW_IM_MODULE=ibus
+# --- fcitx5
+GTK_IM_MODULE DEFAULT=fcitx
+QT_IM_MODULE  DEFAULT=fcitx
+XMODIFIERS    DEFAULT=@im=fcitx
+fcitx5 &

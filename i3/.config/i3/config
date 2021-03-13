@@ -1,0 +1,348 @@
+# set $mod4 Mod1
+set $mod Mod4
+set $BIN $HOME/.config/i3/bin
+
+# new_window pixel 5
+# new_float normal
+# default_border pixel 5
+# if only one window, smart remove the border
+hide_edge_borders smart
+# change border style
+# bindsym $mod+u border none
+# bindsym $mod+n border normal
+# bindsym $mod+o border 1pixel
+focus_follows_mouse no
+floating_modifier $mod
+new_window pixel 1
+# new_window none
+new_float pixel 1
+font pango:Firecode NF 9
+
+# Autostart applications
+exec_always --no-startup-id killall ksplashqml
+# exec_always --no-startup-id killall picom
+exec_always --no-startup-id picom
+exec_always --no-startup-id volnoti
+# 禁用触摸板, 外接键盘时会失效, 通过xinput查看
+# exec_always --no-startup-id xinput --disable 14
+# exec_always --no-startup-id killall redshift
+# exec_always --no-startup-id redshift
+# change keyboard rate in kde settings
+# exec_always --no-startup-id xset r rate 300 50
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# exec --no-startup-id fcitx
+# exec --no-startup-id sogou-qimpanel
+exec_always --no-startup-id $BIN/keyboard-change
+exec_always --no-startup-id feh --bg-fill --no-fehbg --randomize ~/Pictures
+exec_always --no-startup-id $BIN/column-layout
+exec_always --no-startup-id qdbus org.kde.kglobalaccel /kglobalaccel blockGlobalShortcuts true # disable all kde shortcut
+# 外接显示器
+# exec_always --no-startup-id xrandr --output HDMI-0 --auto --left-of DP-4
+# https://github.com/ViliamV/stacki3
+# exec_always stacki3
+# exec_always --no-startup-id autotiling
+
+# keybind
+# bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Return exec --no-startup-id  kitty
+# bindsym $mod+Return exec --no-startup-id konsole # cursor movement is too slow
+# bindsym $mod+d exec --no-startup-id env LC_CTYPE=zh_CN.UTF-8 emacs #ubuntu emacs输入中文解决方案
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+bindsym $mod+q kill
+bindsym $mod+shift+q exec --no-startup-id $BIN/kill-workspace
+bindsym $mod+space exec --no-startup-id $BIN/promote-window
+# bindsym $mod+Shift+bracketright exec --no-startup-id next-workspace --move-window-and-follow
+bindsym $mod+semicolon exec --no-startup-id rofi -show drun   #run drun
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+# split orientation
+# bindsym $mod+ctrl+h split h;exec "notify-send 'tile horizontally'"
+# bindsym $mod+ctrl+v split v;exec "notify-send 'tile vertically'"
+# bindsym $mod+u layout toggle split; exec notify-send "Layout: $(i3-msg -t get_tree | jq -r '[recurse(.nodes[])] | .[] | select(.nodes[].focused).layout')"
+bindsym $mod+u exec --no-startup-id $BIN/toggle-split
+# bindsym $mod+shift+q split toggle
+bindsym $mod+f fullscreen toggle
+# bindsym $mod+s layout stacking
+# bindsym $mod+t layout tabbed
+# bindsym $mod+c layout toggle split
+bindsym $mod+i exec --no-startup-id $BIN/toggle-tabbed
+# bindsym $mod+i layout toggle tabbed split
+bindsym $mod+Shift+o floating toggle
+bindsym $mod+o focus mode_toggle
+# toggle sticky
+bindsym $mod+Shift+s sticky toggle
+bindsym $mod+minus move scratchpad
+bindsym $mod+plus scratchpad show
+bindsym $mod+n workspace next
+# bindsym $mod+Shift+n move container to workspace next; workspace next
+# bindsym $mod+Ctrl+n move container to workspace next
+bindsym $mod+p workspace prev
+# bindsym $mod+Shift+p move container to workspace prev; workspace prev
+# bindsym $mod+Ctrl+p move container to workspace prev
+bindsym $mod+Shift+p exec $BIN/i3MoveNext -1
+bindsym $mod+Shift+n exec $BIN/i3MoveNext 1
+bindsym $mod+Ctrl+p exec $BIN/i3Move -1
+bindsym $mod+Ctrl+n exec $BIN/i3Move 1
+# bindsym $mod+grave workspace prev
+# reload the configuration file
+# bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# touchpad on and off controller on laptop with Fn+<touchpad control functional key>
+# bindsym XF86TouchpadOn exec --no-startup-id synclient Touchpadoff=0
+# bindsym XF86TouchpadOff exec --no-startup-id synclient Touchpadoff=1
+bindsym $mod+Ctrl+a exec --no-startup-id flameshot gui
+# exec --no-startup-id xautolock -time 10 -locker "i3-msg exit"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pamixer --increase 5; volnoti-show `pamixer --get-volume`"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pamixer --decrease 5; volnoti-show `pamixer --get-volume`"
+bindsym XF86AudioMute        exec --no-startup-id "pamixer --toggle-mute; if `pamixer --get-mute`; then volnoti-show -m; else volnoti-show `pamixer --get-volume`; fi"
+# light xbacklight do not change the /sys/class/brightness/nvidim_0/brightness
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; volnoti-show -s /usr/share/pixmaps/volnoti/display-brightness-symbolic.svg $(xbacklight)"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; volnoti-show -s /usr/share/pixmaps/volnoti/display-brightness-symbolic.svg $(xbacklight)"
+
+# Set shut down, restart and locking features
+bindsym $mod+0 mode "$mode_system"
+set $mode_system (l)ock, (r)eboot, (p)oweroff, (e)xit, (s)uspend
+mode "$mode_system" {
+    bindsym l exec "i3lock -c 01544A -n"
+    bindsym r exec reboot
+    bindsym p exec poweroff
+    # bindsym e exec i3-msg exit
+    bindsym e exec qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+    bindsym s exec systemctl suspend
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # exit resize mode: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# move floating windows with keys
+bindsym $mod+m mode "move" focus floating
+mode "move" {
+    bindsym Left  move left 30px
+    bindsym Down  move down 30px
+    bindsym Up    move up 30px
+    bindsym Right move right 30px
+
+    bindsym h     move left 30px
+    bindsym j     move down 30px
+    bindsym k     move up 30px
+    bindsym l     move right 30px
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+bracketright mode "$AppImage"
+set $AppImage (c)opytranslator, (e)lectron-ssr
+mode "$AppImage" {
+    bindsym c exec --no-startup-id /mnt/d/temp/GitHub/software/copytranslator-9.1.0.AppImage, mode "default"
+    bindsym e exec --no-startup-id /mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+# workspaces
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
+
+# Move to workspace with focused container
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+
+# Open specific applications in floating mode
+for_window [title="alsamixer"] floating enable border pixel 1
+for_window [class="Calamares"] floating enable border normal
+for_window [class="Clipgrab"] floating enable
+for_window [title="File Transfer*"] floating enable
+for_window [class="Galculator"] floating enable border pixel 1
+for_window [class="GParted"] floating enable border normal
+for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [class="Lightdm-gtk-greeter-settings"] floating enable
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="Manjaro-hello"] floating enable
+for_window [class="Manjaro Settings Manager"] floating enable border pixel 1
+for_window [title="MuseScore: Play Panel"] floating enable
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="Oblogout"] fullscreen enable
+for_window [class="octopi"] floating enable
+for_window [title="About Pale Moon"] floating enable
+for_window [class="Pamac-manager"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="qt5ct"] floating enable sticky enable border normal
+for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
+for_window [class="Simple-scan"] floating enable border normal
+for_window [class="(?i)System-config-printer.py"] floating enable border normal
+for_window [class="Skype"] floating enable border normal
+for_window [class="Thus"] floating enable border normal
+for_window [class="Timeset-gui"] floating enable border normal
+# for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [class="Xfburn"] floating enable
+for_window [class="Wine"] floating enable
+for_window [class="korganizer"] floating enable
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+for_window [class="wechat.exe"] floating enable
+for_window [class="copytranslator"] floating enable
+
+# i3 & kde
+# Plasma compatibility improvements
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="yakuake"] floating enable
+for_window [class="systemsettings"] floating enable
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+for_window [class="plasmashell" window_type="notification"] border none, move right 800px, move up 450px
+no_focus [class="plasmashell" window_type="notification"]
+
+# using plasma's logout screen instead of i3's
+
+exec --no-startup-id wmctrl -c Plasma
+for_window [title="Desktop — Plasma"] kill; floating enable; border none
+
+# Don’t let notifications and non-interactive pop-up windows steal focus
+no_focus [class="plasmashell" window_type="notification"]
+no_focus [class="plasmashell" window_type="on_screen_display"]
+
+force_display_urgency_hint 0 ms
+focus_on_window_activation urgent
+
+# auto move the application to assigned window
+assign [class="netease-cloud-music"] $ws7
+# assign [class="wechat.exe"] $ws7
+# assign [class="picgo"] $ws8
+# assign [class="(?i)virtualbox"] $ws8
+# assign [class="xAppCenter"] $ws8
+
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #88c0d0 #88c0d0 #ffffff #f00000   #f00000
+client.focused_inactive #4c566a #4c566a #eceff4 #4c566a   #4c566a
+client.unfocused        #3b4252 #3b4252 #d8dee9 #3b4252   #3b4252
+client.urgent           #bf616a #bf616a #eceff4 #bf616a   #bf616a
+client.placeholder      #ebcb8b #1c2027 #eceff4 #ebcb8b   #ebcb8b
+client.background       #1c2027
+# Gaps
+gaps inner 7
+gaps outer 0
+smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
