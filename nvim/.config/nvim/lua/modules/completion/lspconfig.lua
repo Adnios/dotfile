@@ -49,7 +49,7 @@ local enhance_attach = function(client,bufnr)
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
-lspconfig.gopls.setup {
+--[[ lspconfig.gopls.setup {
   cmd = {"gopls","--remote=auto"},
   on_attach = enhance_attach,
   capabilities = capabilities,
@@ -57,7 +57,7 @@ lspconfig.gopls.setup {
     usePlaceholders=true,
     completeUnimported=true,
   }
-}
+} ]]
 
 lspconfig.sumneko_lua.setup {
   cmd = {
@@ -79,12 +79,12 @@ lspconfig.sumneko_lua.setup {
   }
 }
 
-lspconfig.tsserver.setup {
+--[[ lspconfig.tsserver.setup {
   on_attach = function(client)
     client.resolved_capabilities.document_formatting = false
     enhance_attach(client)
   end
-}
+} ]]
 
 lspconfig.clangd.setup {
   cmd = {

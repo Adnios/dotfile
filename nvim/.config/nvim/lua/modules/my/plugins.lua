@@ -8,11 +8,11 @@ my['kevinhwang91/rnvimr'] = {
 }
 
 my['lilydjwg/fcitx.vim'] = {
-  event = 'BufRead *',
+  event = 'BufReadPre'
 }
 
 my['junegunn/vim-peekaboo'] = {
-  event = 'BufRead *'
+  event = 'BufReadPre'
 }
 
 my['thinca/vim-quickrun'] = {
@@ -21,7 +21,7 @@ my['thinca/vim-quickrun'] = {
 }
 
 my['airblade/vim-rooter'] = {
-  event = 'BufRead *',
+  event = 'BufReadPre',
   config = function()
     vim.g.rooter_patterns = {'.git', 'Makefile', '*.sln', 'build/env.sh'}
   end

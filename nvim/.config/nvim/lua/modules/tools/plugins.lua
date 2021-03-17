@@ -17,7 +17,8 @@ tools['editorconfig/editorconfig-vim'] = {
 
 
 tools['b3nj5m1n/kommentary'] = {
-  event = 'BufReadPre'
+  event = 'BufReadPre',
+  config = conf.kommentary
 }
 
 tools['liuchengxu/vista.vim'] = {

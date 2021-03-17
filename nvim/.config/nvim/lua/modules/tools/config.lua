@@ -55,4 +55,12 @@ function config.vim_vista()
   }
 end
 
+function config.kommentary()
+  -- add support for python
+  require('kommentary.config').configure_language("python", {
+    single_line_comment_string = "#",
+    prefer_single_line_comments = true,
+  })
+end
+
 return config

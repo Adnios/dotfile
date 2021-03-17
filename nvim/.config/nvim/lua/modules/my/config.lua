@@ -14,7 +14,8 @@ function config.quickrun()
   vim.g.quickrun_no_default_key_mappings = 1
 end
 
-function config.vimtex()
+-- I do not want to install texlive which is too big
+--[[ function config.vimtex()
   -- " let g:tex_flavor='latex'
   -- " let g:tex_flavor='XeLaTex'
   -- set conceallevel=1
@@ -23,7 +24,7 @@ function config.vimtex()
   vim.g.vimtex_quickfix_mode=0
   vim.g.tex_conceal='abdmg'
   vim.g.vimtex_compiler_progname = 'nvr'
-end
+end ]]
 
 function config.lastplace()
   vim.g.lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
