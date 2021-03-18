@@ -2,18 +2,18 @@ local my = {}
 local conf = require('modules.my.config')
 
 
-my['kevinhwang91/rnvimr'] = {
+--[[ my['kevinhwang91/rnvimr'] = {
   cmd = 'RnvimrToggle',
   config = conf.rnvimr
-}
+} ]]
 
-my['lilydjwg/fcitx.vim'] = {
+--[[ my['lilydjwg/fcitx.vim'] = {
   event = 'BufReadPre'
-}
+} ]]
 
-my['junegunn/vim-peekaboo'] = {
+--[[ my['junegunn/vim-peekaboo'] = {
   event = 'BufReadPre'
-}
+} ]]
 
 my['thinca/vim-quickrun'] = {
   cmd = 'QuickRun',
@@ -27,9 +27,9 @@ my['airblade/vim-rooter'] = {
   end
 }
 
-my['luochen1990/rainbow'] = {
+--[[ my['luochen1990/rainbow'] = {
   ft = 'html,css,javascript,javascriptreact,vue,go,python,c,cpp,lua,rust,vim,less,stylus,sass,scss,json,ruby,scala,toml,php,haskell',
   config = conf.rainbow
-}
+} ]]
 
 return my

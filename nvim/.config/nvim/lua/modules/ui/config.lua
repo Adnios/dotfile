@@ -21,6 +21,7 @@ function config.dashboard()
   vim.g.dashboard_preview_command = 'cat'
   vim.g.dashboard_preview_pipeline = 'lolcat'
   vim.g.dashboard_preview_file = home .. '/.config/nvim/static/neovim.cat'
+  -- vim.g.dashboard_preview_file = home .. '/.config/nvim/static/tiger.txt'
   vim.g.dashboard_preview_file_height = 12
   vim.g.dashboard_preview_file_width = 80
   vim.g.dashboard_default_executive = 'telescope'
@@ -35,7 +36,7 @@ function config.dashboard()
       description = {'  Find  File                              SPC f f'},
       command = 'DashboardFindFile'},
     new_file = {
-     description = {'  File Browser                            SPC f d'},
+     description = {'  File Browser                            SPC f b'},
      command =  'Telescope file_browser'},
     find_word = {
      description = {'  Find  word                              SPC f w'},
@@ -99,6 +100,14 @@ function config._gitsigns()
        ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
        ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
      },
+  }
+end
+
+function config.rainbow()
+  require'nvim-treesitter.configs'.setup {
+    rainbow = {
+      enable = true
+    }
   }
 end
 

@@ -36,4 +36,9 @@ ui['lewis6991/gitsigns.nvim'] = {
   requires = {'nvim-lua/plenary.nvim', opt=true}
 }
 
+ui['p00f/nvim-ts-rainbow'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.rainbow
+}
+
 return ui

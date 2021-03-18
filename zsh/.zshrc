@@ -39,11 +39,12 @@ alias sxiv="$I3BIN/i3-tabbed sxiv"
 
 
 
-fq(){
-  export HTTP_PROXY='http://127.0.0.1:12333'
-  export HTTPS_PROXY='http://127.0.0.1:12333'
-  export ALL_PROXY='socks5://127.0.0.1:1080'
-}
+# fq(){
+# I need proxy all the time in terminal
+export HTTP_PROXY='http://127.0.0.1:12333'
+export HTTPS_PROXY='http://127.0.0.1:12333'
+export ALL_PROXY='socks5://127.0.0.1:1080'
+# }
 
 # open file
 fo() {
