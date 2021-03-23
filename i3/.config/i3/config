@@ -114,6 +114,7 @@ bindsym XF86AudioMute        exec --no-startup-id "pamixer --toggle-mute; if `pa
 # light xbacklight do not change the /sys/class/brightness/nvidim_0/brightness
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; volnoti-show -s /usr/share/pixmaps/volnoti/display-brightness-symbolic.svg $(xbacklight -get)"
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; volnoti-show -s /usr/share/pixmaps/volnoti/display-brightness-symbolic.svg $(xbacklight -get)"
+bindsym $mod+comma exec --no-startup-id yakuake
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"

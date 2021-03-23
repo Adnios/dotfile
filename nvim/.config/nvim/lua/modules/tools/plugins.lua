@@ -7,9 +7,9 @@ local conf = require('modules.tools.config')
 --   requires = {{'tpope/vim-dadbod',opt = true}}
 -- }
 
-tools['editorconfig/editorconfig-vim'] = {
+--[[ tools['editorconfig/editorconfig-vim'] = {
   ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
-}
+} ]]
 
 -- tools['glepnir/prodoc.nvim'] = {
 --   event = 'BufReadPre'
@@ -26,12 +26,12 @@ tools['liuchengxu/vista.vim'] = {
   config = conf.vim_vista
 }
 
-tools['brooth/far.vim'] = {
+--[[ tools['brooth/far.vim'] = {
   cmd = {'Far','Farp'},
   config = function ()
     vim.g['far#source'] = 'rg'
   end
-}
+} ]]
 
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',

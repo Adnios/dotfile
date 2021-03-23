@@ -2,10 +2,10 @@ local my = {}
 local conf = require('modules.my.config')
 
 
---[[ my['kevinhwang91/rnvimr'] = {
+my['kevinhwang91/rnvimr'] = {
   cmd = 'RnvimrToggle',
   config = conf.rnvimr
-} ]]
+}
 
 --[[ my['lilydjwg/fcitx.vim'] = {
   event = 'BufReadPre'

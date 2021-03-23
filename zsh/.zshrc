@@ -34,17 +34,18 @@ alias ls="lsd"
 alias ll="ls -l"
 alias la="ls -la"
 alias lt="ls --tree"
+alias nvim="fq && nvim"
 # https://aduros.com/blog/hacking-i3-window-swallowing/
 alias sxiv="$I3BIN/i3-tabbed sxiv"
 
 
 
-# fq(){
+fq(){
 # I need proxy all the time in terminal
 export HTTP_PROXY='http://127.0.0.1:12333'
 export HTTPS_PROXY='http://127.0.0.1:12333'
 export ALL_PROXY='socks5://127.0.0.1:1080'
-# }
+}
 
 # open file
 fo() {
@@ -135,8 +136,10 @@ export PATH=/home/herewj/bin:$PATH
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 export FZF_DEFAULT_OPTS='--height 90% --layout reverse --border --color "border:#b877db" --preview="bat --color=always {}"'
-# stow dotfiles
-export DOT=/mnt/d/temp/GitHub/doing/dotfiles
+export BAT_THEME="TwoDark"
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
