@@ -45,6 +45,7 @@ local def_map = {
     ["c|<C-d>"]      = map_cmd('<Del>'):with_noremap(),
     ["c|<C-h>"]      = map_cmd('<BS>'):with_noremap(),
     ["c|<C-t>"]      = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
+    ["n|<Esc><Esc>"] = map_cu('nohlsearch'):with_noremap(),
 }
 
 bind.nvim_load_mapping(def_map)

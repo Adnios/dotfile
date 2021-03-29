@@ -11,15 +11,19 @@ local conf = require('modules.tools.config')
   ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 } ]]
 
--- tools['glepnir/prodoc.nvim'] = {
+-- tools['vim-save/prodoc.nvim'] = {
 --   event = 'BufReadPre'
 -- }
 
-
-tools['b3nj5m1n/kommentary'] = {
-  event = 'BufReadPre',
-  config = conf.kommentary
+tools['tomtom/tcomment_vim'] = {
+  evnet = 'BufReadPre'
 }
+
+
+-- tools['b3nj5m1n/kommentary'] = {
+--   event = 'BufReadPre',
+--   config = conf.kommentary
+-- }
 
 tools['liuchengxu/vista.vim'] = {
   cmd = 'Vista',

@@ -63,4 +63,12 @@ function config.kommentary()
   })
 end
 
+function config.commentstring()
+  require'nvim-treesitter.configs'.setup {
+    context_commentstring = {
+      enable = true
+    }
+  }
+end
+
 return config

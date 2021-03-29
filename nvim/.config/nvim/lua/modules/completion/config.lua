@@ -39,6 +39,7 @@ function config.telescope()
     defaults = {
       prompt_prefix = '🔭 ',
       prompt_position = 'top',
+      selection_caret = " ",
       sorting_strategy = 'ascending',
       preview_cutoff = 20,-- bugs when there is no preview windows
       results_width = 0.6,

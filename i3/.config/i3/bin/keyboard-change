@@ -3,6 +3,6 @@ COUNT=$(ps -ef |grep xcape |grep -v "grep" |wc -l)
 setxkbmap -layout us -option ctrl:nocaps
 if [ $COUNT -eq 0 ]; then
   xcape -e 'Control_L=Escape'
-  xcape -e 'Super_L=Control_L|E'
-  xcape -e 'Alt_L=Control_L|Q'
+  # xcape -e 'Super_L=Control_L|E'
+  # xcape -e 'Alt_L=Control_L|Q'
 fi

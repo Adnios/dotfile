@@ -261,7 +261,6 @@ for_window [class="korganizer"] floating enable
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 for_window [class="wechat.exe"] floating enable
-for_window [class="copytranslator"] floating enable
 # for_window [class="gwenview"] floating enable
 
 # i3 & kde
