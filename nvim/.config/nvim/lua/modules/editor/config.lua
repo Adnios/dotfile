@@ -14,6 +14,7 @@ function config.nvim_colorizer()
     scss = { rgb_fn = true; };
     sass = { rgb_fn = true; };
     stylus = { rgb_fn = true; };
+    lua = { rgb_fn = true; };
     vim = { names = true; };
     tmux = { names = false; };
     'javascript';

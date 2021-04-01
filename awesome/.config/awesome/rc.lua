@@ -28,6 +28,8 @@ autorunApps =
 {
   "nm-applet --sm-disable &",
   "bash $HOME/.config/i3/bin/keyboard-change",
+  "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
+  "xscreensaver -nosplash &"
 }
 
 if autorun then
@@ -66,7 +68,9 @@ end
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- my
-beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
+beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -87,10 +91,10 @@ awful.layout.layouts = {
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
+    awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
@@ -191,8 +195,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
-    -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7"}, s, awful.layout.layouts[1])
+    -- Each screen has its own tag table.      v     
+    awful.tag({ "1  ", "2  ", "3  ", "4  ", "5  ", "6  ", "7  ", "8  ", "9  "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -224,14 +228,14 @@ awful.screen.connect_for_each_screen(function(s)
     -- 创建一个cpu监控小部件
     local cpu = lain.widget.cpu {
       settings = function()
-        widget:set_markup(" ⏰ CPU " .. cpu_now.usage)
+        widget:set_markup(" CPU:" .. cpu_now.usage)
       end
     }
     --  创建电池小部件
     local mybattery = lain.widget.bat {
       timeout = 5,
       settings = function()
-        widget:set_markup(" 🔌 " .. bat_now.perc)
+        widget:set_markup("Bat:" .. bat_now.perc)
         batstat = bat_now
       end
     }
@@ -248,21 +252,15 @@ awful.screen.connect_for_each_screen(function(s)
       end
     }
     -- 声音
-    local markup     = lain.util.markup
-    local gray       = "#9E9C9A"
-    local theme = {}
-    theme.font = "FiraCode NF 10"
     local volume = lain.widget.alsa({
         settings = function()
-            header = " Vol "
             vlevel  = volume_now.level
-
             if volume_now.status == "off" then
                 vlevel = vlevel .. "M "
             else
                 vlevel = vlevel .. " "
             end
-            widget:set_markup(markup.font(theme.font, markup(gray, header) .. vlevel))
+            widget:set_markup(" Vol:" .. vlevel)
         end
     })
 
@@ -335,6 +333,16 @@ globalkeys = gears.table.join(
     function (  )
       io.popen("rofi -show drun")
     end),
+    awful.key({modkey}, "]",
+      function ()
+        awful.util.spawn("scrcpy")
+      end
+    ),
+    awful.key({modkey, "Shift"}, "]",
+      function ()
+        awful.util.spawn("kitty --dump-commands sndcpy")
+      end
+    ),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -597,7 +605,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -662,9 +670,9 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+-- client.connect_signal("mouse::enter", function(c)
+--     c:emit_signal("request::activate", "mouse_enter", {raise = false})
+-- end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
