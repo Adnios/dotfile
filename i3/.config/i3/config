@@ -119,6 +119,7 @@ bindsym $mod+comma exec --no-startup-id yakuake
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (r)eboot, (p)oweroff, (e)xit, (s)uspend
+# set $mode_system (l)ock, (r)eboot, (p)oweroff, (s)uspend
 mode "$mode_system" {
     bindsym l exec "i3lock -c 01544A -n"
     bindsym r exec reboot
@@ -174,10 +175,12 @@ mode "move" {
 }
 
 bindsym $mod+bracketright mode "$AppImage"
-set $AppImage (c)opytranslator, (e)lectron-ssr
+set $AppImage (c)opytranslator, (e)lectron-ssr, (s)crcpy, s(n)dcpy
 mode "$AppImage" {
     bindsym c exec --no-startup-id /mnt/d/temp/GitHub/software/copytranslator-9.1.0.AppImage, mode "default"
     bindsym e exec --no-startup-id /mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage, mode "default"
+    bindsym s exec --no-startup-id scrcpy
+    bindsym n exec --no-startup-id kitty --dump-commands sndcpy
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -293,8 +296,20 @@ no_focus [class="plasmashell" window_type="on_screen_display"]
 force_display_urgency_hint 0 ms
 focus_on_window_activation urgent
 
+
+for_window [class="scrcpy"] floating enable
+
+# pycharm 开启居中
+for_window [class="^jetbrains-.+"][window_type=dialog] focus
+for_window [class="^jetbrains-.+"][window_type=dialog] border none
+
+for_window [class="jetbrains-pycharm" title="win0"] floating enable;
+for_window [class="jetbrains-clion" title="win0"] floating enable;
+for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
+
 # auto move the application to assigned window
 assign [class="netease-cloud-music"] $ws7
+assign [class="scrcpy"] $ws7
 # assign [class="wechat.exe"] $ws7
 # assign [class="picgo"] $ws8
 # assign [class="(?i)virtualbox"] $ws8

@@ -65,6 +65,7 @@ local load_core =function()
   vim.cmd [[command! PackerUpdate lua require('core.pack').update()]]
   vim.cmd [[command! PackerSync lua require('core.pack').sync()]]
   vim.cmd [[command! PackerClean lua require('core.pack').clean()]]
+  vim.cmd [[command! PackerStatus lua require('core.pack').status()]]
 end
 
 load_core()

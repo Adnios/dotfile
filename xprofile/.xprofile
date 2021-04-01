@@ -1,3 +1,5 @@
+# kde
+export XDG_CURRENT_DESKTOP=KDE
 # --- Terminal(Kitty)
 export GLFW_IM_MODULE=ibus
 # --- wps

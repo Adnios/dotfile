@@ -1,8 +1,8 @@
 COUNT=$(ps -ef |grep xcape |grep -v "grep" |wc -l)
-# xset r rate 300 50
+xset r rate 300 50
 setxkbmap -layout us -option ctrl:nocaps
 if [ $COUNT -eq 0 ]; then
   xcape -e 'Control_L=Escape'
-  # xcape -e 'Super_L=Control_L|E'
-  # xcape -e 'Alt_L=Control_L|Q'
+  xcape -e 'Super_L=Control_L|E'
+  xcape -e 'Alt_L=Control_L|Q'
 fi

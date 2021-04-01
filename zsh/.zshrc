@@ -37,6 +37,7 @@ alias lt="ls --tree"
 alias nvim="fq && nvim"
 # https://aduros.com/blog/hacking-i3-window-swallowing/
 alias sxiv="$I3BIN/i3-tabbed sxiv"
+alias ssh="kitty +kitten ssh"
 
 
 
