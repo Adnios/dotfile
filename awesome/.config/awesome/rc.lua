@@ -30,6 +30,7 @@ autorunApps =
   "nm-applet --sm-disable &",
   "bash $HOME/.config/i3/bin/keyboard-change",
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
+  "xautolock -time 7 -locker bash $HOME/.config/awesome/bin/lock &"
   -- "xscreensaver -nosplash &"
 }
 
@@ -72,6 +73,7 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
 beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
+
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -88,20 +90,20 @@ modkey = "Mod4"
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
     awful.layout.suit.corner.nw,
-    awful.layout.suit.corner.ne,
-    awful.layout.suit.corner.sw,
-    awful.layout.suit.corner.se,
+    -- awful.layout.suit.corner.ne,
+    -- awful.layout.suit.corner.sw,
+    -- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -230,42 +232,57 @@ awful.screen.connect_for_each_screen(function(s)
     -- 创建一个cpu监控小部件
     local cpu = lain.widget.cpu {
       settings = function()
-        widget:set_markup(" CPU:" .. cpu_now.usage)
+        widget:set_markup("😳CPU:" .. cpu_now.usage .. "% ")
       end
     }
-    --  创建电池小部件
-    local mybattery = lain.widget.bat {
-      timeout = 5,
-      settings = function()
-        widget:set_markup("Bat:" .. bat_now.perc)
-        batstat = bat_now
-      end
-    }
-    local mybattery_t = awful.tooltip {
-      objects = { mybattery.widget },
-      timer_function = function()
-        local msg = ""
-        for i = 1, #batstat.n_status do
-          msg = msg .. lain.util.markup.font("monospace 10",
-            string.format("┌[Battery %d]\n├Status:\t%s\n└Percentage:\t%s\n\n",
-            i-1, batstat.n_status[i], batstat.n_perc[i]))
+    local mem = lain.widget.mem({
+        settings = function()
+            widget:set_markup(("📝MEM:".. mem_now.used .. "MB "))
         end
-        return msg .. lain.util.markup.font("monospace 10", "Time left:\t" .. batstat.time)
-      end
-    }
+    })
     -- 声音
     local volume = lain.widget.alsa({
         settings = function()
             vlevel  = volume_now.level
             if volume_now.status == "off" then
-                vlevel = vlevel .. "M "
+                vlevel = "% 🔇 "
             else
-                vlevel = vlevel .. " "
+                vlevel = "% "
+                -- vlevel = vlevel .. "% "
             end
-            widget:set_markup(" Vol:" .. vlevel)
+            widget:set_markup(" " .. vlevel )
+            -- widget:set_markup("🔊Vol:" .. vlevel )
         end
     })
 
+    local bat = lain.widget.bat({
+        settings = function()
+            if bat_now.status and bat_now.status ~= "N/A" then
+                widget:set_markup(" 🔋Bat ")
+                -- widget:set_markup("🔋Bat " .. bat_now.perc .. "% ")
+            else
+                widget:set_markup(" 🔌AC ")
+                -- widget:set_markup("🔌AC " .. bat_now.perc .. "% ")
+            end
+        end
+    })
+
+    local net = require("awesome-wm-widgets.net-speed-widget.net-speed")
+    local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+    local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+    local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+    local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+    local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+    mytextclock = wibox.widget.textclock()
+    local cw = calendar_widget({
+        theme = 'outrun',
+        placement = 'top_right',
+        radius = 8
+    })
+    mytextclock:connect_signal("button::press",
+        function(_, _, _, button)
+            if button == 1 then cw.toggle() end
+        end)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -282,8 +299,28 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             cpu,
+            cpu_widget({
+              width = 20,
+              step_width = 2,
+              step_spacing = 0,
+              color = '#434c5e'
+            }),
+            mem,
+            volume_widget{
+              type = 'arc'
+            },
             volume,
-            mybattery,
+            brightness_widget{
+              type = 'icon_and_text',
+              program = 'xbacklight',
+              step = 2
+            },
+            bat,
+            batteryarc_widget({
+              show_current_level = true,
+              arc_thickness = 1,
+            }),
+            net(),
             mytextclock,
             s.mylayoutbox,
         },

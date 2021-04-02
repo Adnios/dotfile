@@ -14,7 +14,7 @@ theme.wallpaper = themes_path .. "zenburn/big_cat.jpg"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "FiraCode NF 9"
+theme.font      = "FiraCode NF Bold 8"
 
 -- {{{ Colors
 -- theme.fg_normal  = "#000000"
