@@ -5,8 +5,9 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
--- 插件
+-- begin
 local lain = require("lain")
+-- end
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
@@ -29,7 +30,7 @@ autorunApps =
   "nm-applet --sm-disable &",
   "bash $HOME/.config/i3/bin/keyboard-change",
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
-  "xscreensaver -nosplash &"
+  -- "xscreensaver -nosplash &"
 }
 
 if autorun then
@@ -71,7 +72,6 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
 beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
-
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -88,20 +88,20 @@ modkey = "Mod4"
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
-    -- awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
-    -- awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
+    awful.layout.suit.magnifier,
+    awful.layout.suit.corner.nw,
+    awful.layout.suit.corner.ne,
+    awful.layout.suit.corner.sw,
+    awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -196,7 +196,9 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.      v     
-    awful.tag({ "1  ", "2  ", "3  ", "4  ", "5  ", "6  ", "7  ", "8  ", "9  "}, s, awful.layout.layouts[1])
+    -- awful.tag({ "1  ", "2  ", "3  ", "4  ", "5  ", "6  ", "7  ", "8  ", "9  "}, s,awful.layout.layouts[1])
+    -- use medium.com to get some icons ✍ ⚓ ⚡ ⚪. ⚽ ⛄ ⛅ ⛔ ⛪ ⛳ ⛵ ⛺ ⛽ ☕ ⚫ ☔ ♿️ ⛲ ⚡
+    awful.tag({ "1 😍 ", "2 😄 ", "3 😫 ", "4 🎉 ", "5 ❤️ ", "6  😮 ", "7 😃 ", "8 😎 ", "9 👏 "}, s,awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -263,7 +265,6 @@ awful.screen.connect_for_each_screen(function(s)
             widget:set_markup(" Vol:" .. vlevel)
         end
     })
-
 
 
     -- Add widgets to the wibox
@@ -580,6 +581,9 @@ awful.rules.rules = {
           "pinentry",
         },
         class = {
+          -- add
+          "scrcpy",
+          -- end
           "Arandr",
           "Blueman-manager",
           "Gpick",
@@ -611,6 +615,21 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+
+    -- jetbrains
+    -- { rule = {
+    --     class = "jetbrains-.*",
+    --     instance = "sun-awt-X11-XWindowPeer",
+    --     name = "win.*"
+    --   },
+    --   properties = {
+    --       floating = true,
+    --       focus = true,
+    --       focusable = false,
+    --       ontop = true,
+    --       placement = awful.placement.restore,
+    --       buttons = {}
+    --   }},
 }
 -- }}}
 
@@ -688,9 +707,18 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- 窗口规则
 ---- 内边框
-beautiful.useless_gap = 3
----- 外边框
-for s = 1, screen.count()
-do
-	awful.screen.padding(screen[s], { top = 0, left = 0, right = 0, bottom = 0 })
-end
+-- beautiful.gap_single_client = false
+beautiful.useless_gap = 2
+---- 外边框, 只有一个窗口时不加边框
+screen.connect_signal("arrange", function (s)
+    local max = s.selected_tag.layout.name == "max"
+    local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
+    -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
+    for _, c in pairs(s.clients) do
+        if (max or only_one) and not c.floating or c.maximized then
+            c.border_width = 0
+        else
+            c.border_width = beautiful.border_width
+        end
+    end
+end)
