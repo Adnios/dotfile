@@ -1,0 +1,129 @@
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+screenchange-reload = true
+compositing-background = over
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+; Define fallback values used by all module formats
+format-foreground = #FF0000
+format-background = #008800
+format-underline =
+format-overline =
+format-spacing =
+format-padding =
+format-margin =
+format-offset =
+
+[colors]
+; INTRCPTR theme ============
+; background = #cc222222
+background = #00000000
+; background = #00
+foreground = #eceff4
+foreground-alt = #bd2c40
+primary = #edb443
+t4 = #2aa889
+t5 = #2aa889
+t6 = #d26937
+secondary = #d26937
+alert = #d26937
+
+[bar/mainbar-i3]
+monitor = ${env:MONITOR}
+monitor-strict = false
+override-redirect = true
+bottom = false
+fixed-center = true
+width = 30%
+height = 27
+offset-x = 0
+offset-y = 0
+background = ${colors.background}
+foreground = ${colors.foreground}
+radius = 0.0
+line-size = 2
+line-color = #000000
+border-size = 0
+border-color = #000000
+padding-left = 1
+padding-right = 1
+module-margin-left = 0
+module-margin-right = 0
+font-0 = "UbuntuMono Nerd Font:size=10;2"
+font-1 = "UbuntuMono Nerd Font:size=16;3"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
+font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
+font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
+modules-left = i3
+
+; 图标显示位置，我们不在polybar上显示
+;tray-position = right
+tray-detached = false
+tray-maxsize = 20
+tray-background = ${colors.background}
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 4
+tray-scale = 1.0
+enable-ipc = true
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+strip-wsnumbers = false
+index-sort = false
+enable-click = true
+enable-scroll = true
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = false
+;http://fontawesome.io/cheatsheet/
+;       v     
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-7 = 5;
+ws-icon-4 = 6;
+ws-icon-5 = 7;
+ws-icon-6 = 8;
+ws-icon-8 = 9;
+ws-icon-default = " "
+format = <label-state> <label-mode>
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = #000000
+label-mode-background = #FFBB00
+label-focused = %icon% %name%
+label-focused-background = ${colors.background}
+label-focused-foreground = #FFBB00
+label-focused-underline = ${colors.primary}
+label-focused-padding = 2
+
+label-unfocused = %icon% %name%
+label-unfocused-padding = 2
+label-unfocused-background = ${colors.background}
+label-unfocused-foreground = ${colors.foreground}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %icon% %name%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = 2
+label-urgent = %icon% %name%
+label-urgent-background = ${self.label-focused-background}
+label-urgent-foreground = #db104e
+label-urgent-padding = 2
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}

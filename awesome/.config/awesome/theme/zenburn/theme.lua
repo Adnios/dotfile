@@ -17,16 +17,18 @@ theme.wallpaper = themes_path .. "zenburn/big_cat.jpg"
 theme.font      = "FiraCode NF Bold 8"
 
 -- {{{ Colors
--- theme.fg_normal  = "#000000"
-theme.fg_normal  = "#DCDCCC"
+-- 前两位表示透明度
+theme.fg_normal  = "#DCDCDC"
 theme.fg_focus   = "#F0DFAF"
 theme.fg_urgent  = "#CC9393"
-theme.bg_normal  = "#666666"
--- theme.bg_normal  = "#3F3F3F"
+theme.bg_normal  = "#803F3F3F"
 theme.bg_focus   = "#2f2f2f"
 -- theme.bg_focus   = "#1E2320"
 theme.bg_urgent  = "#3F3F3F"
-theme.bg_systray = theme.bg_normal
+-- theme.bg_systray = theme.bg_normal
+-- 这个参数不支持透明
+-- https://htmlcolorcodes.com/
+theme.bg_systray = "#2B5D8C"
 -- }}}
 
 -- {{{ Borders

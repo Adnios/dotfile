@@ -24,19 +24,20 @@ require("awful.hotkeys_popup.keys")
 -- ME
 ---{{{ auto start
 -- 添加自启动
-autorun = true
-autorunApps =
+Autorun = true
+AutorunApps =
 {
   "nm-applet --sm-disable &",
+  "blueman-applet &",
   "bash $HOME/.config/i3/bin/keyboard-change",
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
-  "xautolock -time 7 -locker bash $HOME/.config/awesome/bin/lock &"
-  -- "xscreensaver -nosplash &"
+  "picom &";
+  "xautolock -time 7 -locker lock &"
 }
 
-if autorun then
-	for app = 1, #autorunApps do
-		awful.util.spawn_with_shell(autorunApps[app])
+if Autorun then
+	for app = 1, #AutorunApps do
+		awful.util.spawn_with_shell(AutorunApps[app])
 	end
 end
 ---}}}
@@ -240,6 +241,15 @@ awful.screen.connect_for_each_screen(function(s)
             widget:set_markup(("📝MEM:".. mem_now.used .. "MB "))
         end
     })
+    -- not working
+    -- local mytemp = lain.widget.temp({
+    --   settings = function ()
+    --     timeout = 2
+    --     -- tempfile = "/sys/devices/virtual/thermal/thermal_zone0/temp"
+    --     -- tempfile = "/sys/class/hwmon/hwmon0/temp1_input"
+    --     widget:set_markup(" ⛺️TEMP:" .. coretemp_now .. "°C ")
+    --   end
+    -- })
     -- 声音
     local volume = lain.widget.alsa({
         settings = function()
@@ -257,18 +267,33 @@ awful.screen.connect_for_each_screen(function(s)
 
     local bat = lain.widget.bat({
         settings = function()
-            if bat_now.status and bat_now.status ~= "N/A" then
-                widget:set_markup(" 🔋Bat ")
-                -- widget:set_markup("🔋Bat " .. bat_now.perc .. "% ")
-            else
-                widget:set_markup(" 🔌AC ")
-                -- widget:set_markup("🔌AC " .. bat_now.perc .. "% ")
-            end
+          widget:set_markup(" 🔋Bat ")
         end
     })
+    --  创建电池小部件
+    local mybattery = lain.widget.bat {
+      timeout = 5,
+      settings = function()
+        widget:set_markup(" 🔌🔋" .. bat_now.perc)
+        batstat = bat_now
+      end
+    }
+
+    local mybattery_t = awful.tooltip {
+      objects = { mybattery.widget },
+      timer_function = function()
+        local msg = ""
+        for i = 1, #batstat.n_status do
+          msg = msg .. lain.util.markup.font("monospace 10",
+            string.format("┌[Battery %d]\n├Status:\t%s\n└Percentage:\t%s\n\n",
+            i-1, batstat.n_status[i], batstat.n_perc[i]))
+        end
+        return msg .. lain.util.markup.font("monospace 10", "Time left:\t" .. batstat.time)
+      end
+    }
 
     local net = require("awesome-wm-widgets.net-speed-widget.net-speed")
-    local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+    -- local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
     local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
     local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
     local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
@@ -296,8 +321,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
+            -- mykeyboardlayout,
+            mytextclock,
             cpu,
             cpu_widget({
               width = 20,
@@ -312,16 +337,19 @@ awful.screen.connect_for_each_screen(function(s)
             volume,
             brightness_widget{
               type = 'icon_and_text',
-              program = 'xbacklight',
-              step = 2
+              -- program = 'xbacklight',
+              program = 'light',
+              step = 5
             },
-            bat,
-            batteryarc_widget({
-              show_current_level = true,
-              arc_thickness = 1,
-            }),
+            -- mytemp,
+            mybattery,
+            -- bat,
+            -- batteryarc_widget({
+            --   show_current_level = true,
+            --   arc_thickness = 2
+            -- }),
             net(),
-            mytextclock,
+            wibox.widget.systray(),
             s.mylayoutbox,
         },
     }
@@ -337,18 +365,21 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
+local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     -- my keybinding
     -- 降低屏幕亮度
-		awful.key({""},"XF86MonBrightnessUp",
-			function()
-				awful.util.spawn("light -A 5")
-			end),
-		awful.key({""},"XF86MonBrightnessDown",
-			function()
-				awful.util.spawn("light -U 5")
-			end),
+    awful.key({""}, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
+    awful.key({""}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
+		-- awful.key({""},"XF86MonBrightnessUp",
+		-- 	function()
+		-- 		awful.util.spawn("light -A 5")
+		-- 	end),
+		-- awful.key({""},"XF86MonBrightnessDown",
+		-- 	function()
+		-- 		awful.util.spawn("light -U 5")
+		-- 	end),
     awful.key({""},"XF86AudioMute",
     function()
       awful.util.spawn("pamixer --toggle-mute")
@@ -595,13 +626,60 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
+-- https://github.com/lilydjwg/myawesomerc/blob/master/rc.lua
+local old_filter = awful.client.focus.filter
+function myfocus_filter(c)
+  if old_filter(c) then
+    -- TM.exe completion pop-up windows
+    if (c.instance == 'tim.exe' or c.instance == 'TIM.exe')
+        and c.above and c.skip_taskbar
+        and (c.type == 'normal' or c.type == 'dialog') -- dialog type is for tooltip windows
+        and (c.class == 'qq.exe' or c.class == 'QQ.exe' or c.class == 'TIM.exe') then
+        return nil
+    -- This works with tooltips and some popup-menus
+    elseif c.class == 'Wine' and c.above == true then
+        return nil
+    elseif c.class == 'WeChat.exe' and (
+        c.name == 'CMenuWnd' or not c.name
+        or c.name == 'SessionChatRoomDetailWnd'
+        ) then -- 微信菜单
+        c.border_width = 0
+        do return nil end
+    elseif (c.class == 'Wine' or c.class == 'QQ.exe' or c.class == 'qq.exe')
+      and c.type == 'dialog'
+      and c.skip_taskbar == true
+      and c.size_hints.max_width and c.size_hints.max_width < 160
+      then
+      -- for popup item menus of Photoshop CS5
+      return nil
+    elseif c.class == 'TelegramDesktop' and c.above == true and c.name == 'Media viewer' then
+      -- Telegram media preview (https://t.me/archlinuxcn_group/1823691)
+      c.fullscreen = true
+      return c
+    elseif c.class == 'TelegramDesktop' and c.above == true then
+      -- Telegram picture-in-picture
+      c.border_width = 0
+      return c
+    elseif c.skip_taskbar and c.instance == 'Popup' and c.class == 'Firefox' then
+      -- popups for Settings page in Firefox
+      return nil
+    elseif c.class == 'Key-mon' then
+      return nil
+    else
+      return c
+    end
+  end
+end
+awful.client.focus.filter = myfocus_filter
+
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
+                     -- focus = awful.client.focus.filter,
+                     focus = myfocus_filter,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
@@ -620,6 +698,9 @@ awful.rules.rules = {
         class = {
           -- add
           "scrcpy",
+          -- "wechat.exe",
+          -- "tim.exe",
+          -- "Wine",
           -- end
           "Arandr",
           "Blueman-manager",
@@ -650,8 +731,42 @@ awful.rules.rules = {
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "scrcpy" },
+      properties = { screen = 1, tag = "7 😃 " } },
+    { rule = { class = "netease-cloud-music" },
+      properties = { screen = 1, tag = "7 😃 " } },
+
+    { rule_any = {
+      instance = {
+          'qq.exe', 'QQ.exe', 'TIM.exe', 'tim.exe',
+          'QQExternal.exe', -- QQ 截图
+          'deepin-music-player',
+          'wechat.exe', 'wechatupdate.exe',
+          "megasync", "kruler",
+        },
+      },
+      properties = {
+        -- This, together with myfocus_filter, make the popup menus flicker taskbars less
+        -- Non-focusable menus may cause TM2013preview1 to not highlight menu
+        -- items on hover and crash.
+        -- Also for deepin-music, removing borders and floating pop-ups
+        focusable = true,
+        floating = true,
+        border_width = 0,
+      }
+    },
+    { rule = {
+      class = "Wine",
+      skip_taskbar = true,
+      type = "dialog",
+    },
+    callback = function (c)
+      if c.size_hints.max_width and c.size_hints.max_width < 160 then
+        -- for popup item menus of Photoshop CS5
+        c.border_width = 0
+      end
+    end,
+    },
 
     -- jetbrains
     -- { rule = {
@@ -744,15 +859,18 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- 窗口规则
 ---- 内边框
--- beautiful.gap_single_client = false
 beautiful.useless_gap = 2
----- 外边框, 只有一个窗口时不加边框
+beautiful.gap_single_client = true
+-- 外边框, 只有一个窗口时不加边框
 screen.connect_signal("arrange", function (s)
-    local max = s.selected_tag.layout.name == "max"
+    -- bug 在tag上右击，tag为空时，selected_tag报错
+    -- local max = s.selected_tag.layout.name == "max"
     local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
     -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
     for _, c in pairs(s.clients) do
-        if (max or only_one) and not c.floating or c.maximized then
+        -- if (max or only_one) and not c.floating or c.maximized then
+        -- c.class == 'Wine' or c.instance == 'tim.exe'
+        if (only_one) and not c.floating or c.maximized or c.class == 'Wine' then
             c.border_width = 0
         else
             c.border_width = beautiful.border_width
