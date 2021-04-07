@@ -400,18 +400,20 @@ globalkeys = gears.table.join(
     -- rofi
     awful.key({modkey}, ";",
     function (  )
-      io.popen("rofi -show drun")
+      -- io.popen("rofi -show drun")
+      io.popen("rofi -combi-modi drun,run,ssh -mesg -show combi -modi combi")
     end),
-    awful.key({modkey}, "]",
-      function ()
-        awful.util.spawn("scrcpy")
-      end
-    ),
-    awful.key({modkey, "Shift"}, "]",
-      function ()
-        awful.util.spawn("kitty --dump-commands sndcpy")
-      end
-    ),
+    -- use rofi to run scrcpy and sndcpy
+    -- awful.key({modkey}, "]",
+    --   function ()
+    --     awful.util.spawn("scrcpy")
+    --   end
+    -- ),
+    -- awful.key({modkey, "Shift"}, "]",
+    --   function ()
+    --     awful.util.spawn("kitty --dump-commands sndcpy")
+    --   end
+    -- ),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),

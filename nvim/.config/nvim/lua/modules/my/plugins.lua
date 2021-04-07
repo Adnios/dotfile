@@ -11,9 +11,9 @@ my['kevinhwang91/rnvimr'] = {
   event = 'BufReadPre'
 } ]]
 
---[[ my['junegunn/vim-peekaboo'] = {
+my['junegunn/vim-peekaboo'] = {
   event = 'BufReadPre'
-} ]]
+}
 
 my['thinca/vim-quickrun'] = {
   cmd = 'QuickRun',
