@@ -32,7 +32,7 @@ AutorunApps =
   "bash $HOME/.config/i3/bin/keyboard-change",
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "picom &";
-  "xautolock -time 7 -locker lock &"
+  "xautolock -time 60 -locker lock &"
 }
 
 if Autorun then
@@ -233,7 +233,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- 创建一个cpu监控小部件
     local cpu = lain.widget.cpu {
       settings = function()
-        widget:set_markup("😳CPU:" .. cpu_now.usage .. "% ")
+        widget:set_markup("⛺️CPU:" .. cpu_now.usage .. "% ")
       end
     }
     local mem = lain.widget.mem({
@@ -255,7 +255,8 @@ awful.screen.connect_for_each_screen(function(s)
         settings = function()
             vlevel  = volume_now.level
             if volume_now.status == "off" then
-                vlevel = "% 🔇 "
+                -- vlevel = "% 🔇 "
+                vlevel = "%  "
             else
                 vlevel = "% "
                 -- vlevel = vlevel .. "% "
@@ -270,11 +271,16 @@ awful.screen.connect_for_each_screen(function(s)
           widget:set_markup(" 🔋Bat ")
         end
     })
+    local time = lain.widget.bat({
+        settings = function()
+          widget:set_markup("⏰")
+        end
+    })
     --  创建电池小部件
     local mybattery = lain.widget.bat {
       timeout = 5,
       settings = function()
-        widget:set_markup(" 🔌🔋" .. bat_now.perc)
+        widget:set_markup(" 🔋" .. bat_now.perc)
         batstat = bat_now
       end
     }
@@ -309,6 +315,20 @@ awful.screen.connect_for_each_screen(function(s)
             if button == 1 then cw.toggle() end
         end)
 
+    -- Create a custom bar textbox widget
+    s.mybarbox = wibox.widget.textbox()
+
+    -- Spawn bar info
+    local bar_path = "/home/wmoore/Projects/bar/target/release/bar -a -w"
+    awful.spawn.with_line_callback(bar_path, {
+        stdout = function(line)
+            s.mybarbox.markup = line
+        end,
+        stderr = function(line)
+            naughty.notify { text = "ERR: "..line }
+        end
+    })
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -322,13 +342,14 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
+            time,
             mytextclock,
             cpu,
             cpu_widget({
               width = 20,
               step_width = 2,
               step_spacing = 0,
-              color = '#434c5e'
+              color = '#ffffff'
             }),
             mem,
             volume_widget{
@@ -349,6 +370,7 @@ awful.screen.connect_for_each_screen(function(s)
             --   arc_thickness = 2
             -- }),
             net(),
+            s.mybarbox,
             wibox.widget.systray(),
             s.mylayoutbox,
         },

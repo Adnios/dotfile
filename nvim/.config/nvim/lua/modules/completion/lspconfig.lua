@@ -3,13 +3,28 @@ local lspconfig = require 'lspconfig'
 local global = require 'core.global'
 local format = require('modules.completion.format')
 
+-- virtual diagnostics lspsage is more beautiful
+-- vim.cmd('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
+-- vim.cmd('autocmd CursorHold * :Lspsaga show_line_diagnostics')
+vim.cmd('autocmd CursorHold * :Lspsaga show_cursor_diagnostics')
+vim.cmd('autocmd CursorHold * silent! update')
+
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
 end
 
 local saga = require 'lspsaga'
 saga.init_lsp_saga({
-  code_action_icon = '💡'
+  -- code_action_icon = '💡'
+  error_sign = '🔥',
+  warn_sign = '🐛',
+  code_action_icon = '💡',
+  code_action_prompt = {
+    sign_priority = 60,
+    virtual_text = false
+  },
+  hint_sign = '🌿',
+  dianostic_header_icon = "👀 "
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -33,7 +48,8 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     -- Enable underline, use default values
     underline = true,
     -- Enable virtual text, override spacing to 4
-    virtual_text = true,
+    virtual_text = false,
+    -- virtual_text = true,
     signs = {
       enable = true,
       priority = 20
@@ -86,15 +102,15 @@ lspconfig.sumneko_lua.setup {
   end
 } ]]
 
-lspconfig.clangd.setup {
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--suggest-missing-includes",
-    "--clang-tidy",
-    "--header-insertion=iwyu",
-  },
-}
+-- lspconfig.clangd.setup {
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "--suggest-missing-includes",
+--     "--clang-tidy",
+--     "--header-insertion=iwyu",
+--   },
+-- }
 
 -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
 lspconfig.ccls.setup {

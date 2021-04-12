@@ -35,6 +35,7 @@ local plug_map = {
     ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>ce"]     = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
+    -- ["n|<Leader>ce"]     = map_cr('Lspsaga show_cursor_diagnostics'):with_noremap():with_silent(),
     ["n|<Leader>ct"]      = map_args("Template"),
     ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
     -- Plugin nvim-tree
@@ -67,9 +68,9 @@ local plug_map = {
     ["n|<Leader>fd"]     = map_cu('Telescope dotfiles path='..os.getenv("HOME")..'/.dotfiles'):with_noremap():with_silent(),
     ["n|<Leader>fs"]     = map_cu('Telescope gosource'):with_noremap():with_silent(),
     -- prodoc
-    ["n|gcc"]            = map_cu('ProComment'):with_noremap():with_silent(),
-    ["x|gc"]             = map_cr('ProComment'),
-    ["n|gcj"]            = map_cu('ProDoc'):with_silent():with_silent(),
+    -- ["n|gcc"]            = map_cu('ProComment'):with_noremap():with_silent(),
+    -- ["x|gc"]             = map_cr('ProComment'),
+    -- ["n|gcj"]            = map_cu('ProDoc'):with_silent():with_silent(),
     -- Plugin acceleratedjk
     ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
     ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),

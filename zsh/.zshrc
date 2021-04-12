@@ -130,6 +130,10 @@ set RANGER_LOAD_DEFAULT_RC = FALSE
 export PATH="$HOME/.local/bin:$PATH"
 export PATH=/home/herewj/bin:$PATH
 
+export PATH=$PATH:/opt/cuda/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/lib64
+export CUDA_HOME=$CUDA_HOME:/opt/cuda
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k-evilball.zsh ]] || source ~/.p10k-evilball.zsh
 
