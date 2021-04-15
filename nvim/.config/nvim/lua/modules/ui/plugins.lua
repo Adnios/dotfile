@@ -28,7 +28,7 @@ ui['akinsho/nvim-bufferline.lua'] = {
 
 ui['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle','NvimTreeOpen'},
-  commit = "bbb8d6070f2a35ae85d1790fa3f8fff56c06d4ec",
+  -- commit = "bbb8d6070f2a35ae85d1790fa3f8fff56c06d4ec",
   config = conf.nvim_tree,
   requires = 'kyazdani42/nvim-web-devicons'
 }

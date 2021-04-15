@@ -114,6 +114,7 @@ lspconfig.sumneko_lua.setup {
 
 -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
 lspconfig.ccls.setup {
+  filetypes = {"c", "cpp","cuda", "objc", "objcpp"};
   init_options = {
     cache = {
       directory = ".ccls-cache";

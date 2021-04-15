@@ -36,4 +36,13 @@ function config.rainbow()
   vim.g.rainbow_active = 1
 end
 
+function config.toggleterm()
+  local large_screen = vim.o.columns > 200
+  require("toggleterm").setup {
+    size = (large_screen and vim.o.columns * 0.5 or 15),
+    open_mapping = [[<c-\>]],
+    direction = large_screen and "vertical" or "horizontal"
+  }
+end
+
 return config

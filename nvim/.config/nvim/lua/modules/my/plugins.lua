@@ -33,14 +33,8 @@ my['airblade/vim-rooter'] = {
 } ]]
 
 my['akinsho/nvim-toggleterm.lua'] = {
-  branch = "refactor/terminal-classes",
-  config = function()
-    require "toggleterm".setup {
-      size = 15,
-      open_mapping = [[<c-\>]],
-      direction = "window"
-    }
-  end
+  cmd = 'ToggleTerm',
+  config = conf.toggleterm
 }
 
 return my

@@ -96,6 +96,10 @@ local plug_map = {
     ["x|I"]              = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
     ["x|gI"]             = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
     ["x|A"]              = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
+
+    -- Plugin nvim-toggleterm
+    -- ["n|<Leader>t"]      = map_cu('ToggleTerm'):with_noremap(),
+    ["n|<C-\\>"]      = map_cu('ToggleTerm'):with_noremap(),
 };
 
 bind.nvim_load_mapping(plug_map)
