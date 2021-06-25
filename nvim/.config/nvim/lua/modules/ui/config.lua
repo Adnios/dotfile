@@ -49,10 +49,10 @@ function config.dashboard()
 end
 
 function config.nvim_tree()
-  require'nvim-tree.events'.on_nvim_tree_ready(function ()
-    vim.cmd("NvimTreeRefresh")
-  end)
-  vim.g.nvim_tree_auto_open = 1
+  -- require'nvim-tree.events'.on_nvim_tree_ready(function ()
+  --   vim.cmd("NvimTreeRefresh")
+  -- end)
+  -- vim.g.nvim_tree_auto_open = 1
   vim.g.nvim_tree_follow = 1
   vim.g.nvim_tree_hide_dotfiles = 1
   vim.g.nvim_tree_indent_markers = 1
@@ -154,7 +154,7 @@ function config.indent_blakline()
   }
   vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
   vim.g.indent_blankline_show_trailing_blankline_indent = false
-  vim.g.indent_blankline_show_current_context = true
+  -- vim.g.indent_blankline_show_current_context = true
   vim.g.indent_blankline_context_patterns = {
     "class",
     "function",
@@ -169,7 +169,7 @@ function config.indent_blakline()
     "for"
   }
   -- because lazy load indent-blankline so need readd this autocmd
-  vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
+  -- vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
 end
 
 return config

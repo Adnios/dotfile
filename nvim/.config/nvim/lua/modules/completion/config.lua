@@ -41,7 +41,7 @@ function config.telescope()
       prompt_position = 'top',
       selection_caret = " ",
       sorting_strategy = 'ascending',
-      preview_cutoff = 20,-- bugs when there is no preview windows
+      -- preview_cutoff = 20,-- bugs when there is no preview windows
       results_width = 0.6,
       file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
       grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,

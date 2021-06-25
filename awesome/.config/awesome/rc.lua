@@ -21,6 +21,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local xrandr = require("xrandr")
+
 -- ME
 ---{{{ auto start
 -- 添加自启动
@@ -33,6 +35,7 @@ AutorunApps =
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "picom &";
   "xautolock -time 60 -locker lock &"
+  -- "redshift"
 }
 
 if Autorun then
@@ -273,7 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
     })
     local time = lain.widget.bat({
         settings = function()
-          widget:set_markup("⏰")
+          widget:set_markup(" ⏰")
         end
     })
     --  创建电池小部件
@@ -298,7 +301,7 @@ awful.screen.connect_for_each_screen(function(s)
       end
     }
 
-    local net = require("awesome-wm-widgets.net-speed-widget.net-speed")
+    -- local net = require("awesome-wm-widgets.net-speed-widget.net-speed")
     -- local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
     local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
     local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
@@ -342,6 +345,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
+            mybattery,
             time,
             mytextclock,
             cpu,
@@ -363,13 +367,12 @@ awful.screen.connect_for_each_screen(function(s)
               step = 5
             },
             -- mytemp,
-            mybattery,
             -- bat,
             -- batteryarc_widget({
             --   show_current_level = true,
             --   arc_thickness = 2
             -- }),
-            net(),
+            -- net(),
             s.mybarbox,
             wibox.widget.systray(),
             s.mylayoutbox,
@@ -505,6 +508,7 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+    awful.key({modkey, "Shift"}, "p", function() xrandr.xrandr() end),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -901,3 +905,4 @@ screen.connect_signal("arrange", function (s)
         end
     end
 end)
+

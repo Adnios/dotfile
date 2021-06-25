@@ -27,8 +27,7 @@ ui['akinsho/nvim-bufferline.lua'] = {
 }
 
 ui['kyazdani42/nvim-tree.lua'] = {
-  cmd = {'NvimTreeToggle','NvimTreeOpen'},
-  -- commit = "bbb8d6070f2a35ae85d1790fa3f8fff56c06d4ec",
+  -- cmd = {'NvimTreeToggle','NvimTreeOpen'},
   config = conf.nvim_tree,
   requires = 'kyazdani42/nvim-web-devicons'
 }
@@ -39,9 +38,9 @@ ui['lewis6991/gitsigns.nvim'] = {
   requires = {'nvim-lua/plenary.nvim', opt=true}
 }
 
-ui['p00f/nvim-ts-rainbow'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.rainbow
-}
+-- ui['p00f/nvim-ts-rainbow'] = {
+--   event = {'BufReadPre', 'BufNewFile'},
+--   config = conf.rainbow
+-- }
 
 return ui

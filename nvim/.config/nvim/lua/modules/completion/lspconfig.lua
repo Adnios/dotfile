@@ -7,6 +7,8 @@ local format = require('modules.completion.format')
 -- vim.cmd('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
 -- vim.cmd('autocmd CursorHold * :Lspsaga show_line_diagnostics')
 vim.cmd('autocmd CursorHold * :Lspsaga show_cursor_diagnostics')
+-- vim.cmd('autocmd CursorMoved * :Lspsaga show_cursor_diagnostics')
+-- vim.cmd('autocmd CursorMoved * silent! update')
 vim.cmd('autocmd CursorHold * silent! update')
 
 if not packer_plugins['lspsaga.nvim'].loaded then
@@ -102,25 +104,25 @@ lspconfig.sumneko_lua.setup {
   end
 } ]]
 
--- lspconfig.clangd.setup {
---   cmd = {
---     "clangd",
---     "--background-index",
---     "--suggest-missing-includes",
---     "--clang-tidy",
---     "--header-insertion=iwyu",
---   },
--- }
+lspconfig.clangd.setup {
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--suggest-missing-includes",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+  },
+}
 
 -- https://github.com/MaskRay/ccls/wiki/nvim-lspconfig
-lspconfig.ccls.setup {
-  filetypes = {"c", "cpp","cuda", "objc", "objcpp"};
-  init_options = {
-    cache = {
-      directory = ".ccls-cache";
-    };
-  }
-}
+-- lspconfig.ccls.setup {
+--   filetypes = {"c", "cpp","cuda", "objc", "objcpp"};
+--   init_options = {
+--     cache = {
+--       directory = ".ccls-cache";
+--     };
+--   }
+-- }
 
 local servers = {
   'bashls','pyright'

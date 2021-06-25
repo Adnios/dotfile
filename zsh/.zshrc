@@ -25,7 +25,7 @@ export GIT_EDITOR="nvim"
 export REACT_EDITOR="nvim"
 
 alias r=ranger
-alias t="tmux"
+alias t="conda activate base && tmux"
 alias ta="t a -t"
 alias tls="t ls"
 alias tn="t new -t"
@@ -36,10 +36,8 @@ alias la="ls -la"
 alias lt="ls --tree"
 alias nvim="fq && nvim"
 # https://aduros.com/blog/hacking-i3-window-swallowing/
-alias sxiv="$I3BIN/i3-tabbed sxiv"
-alias ssh="kitty +kitten ssh"
-
-
+# alias sxiv="$I3BIN/i3-tabbed sxiv"
+# alias ssh="kitty +kitten ssh"
 
 fq(){
 # I need proxy all the time in terminal
@@ -130,9 +128,13 @@ set RANGER_LOAD_DEFAULT_RC = FALSE
 export PATH="$HOME/.local/bin:$PATH"
 export PATH=/home/herewj/bin:$PATH
 
-export PATH=$PATH:/opt/cuda/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/lib64
-export CUDA_HOME=$CUDA_HOME:/opt/cuda
+# export PATH=$PATH:/opt/cuda/bin
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/lib64
+# export CUDA_HOME=$CUDA_HOME:/opt/cuda
+
+export CPATH=/usr/local/cuda/targets/x86_64-linux/include:$CPATH
+export LD_LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
+export PATH=/usr/local/cuda/bin:$PATH
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k-evilball.zsh ]] || source ~/.p10k-evilball.zsh
@@ -160,3 +162,9 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export DOTFILES=$HOME/.dotfiles
+export PROJECTS_DIR=$HOME/Desktop/projects
+export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal

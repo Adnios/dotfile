@@ -2,12 +2,14 @@ local completion = {}
 local conf = require('modules.completion.config')
 
 completion['neovim/nvim-lspconfig'] = {
-  event = 'BufReadPre',
+  -- event = 'BufReadPre',
+  event = {'BufReadPre', 'BufNewFile'},
   config = conf.nvim_lsp,
 }
 
 completion['glepnir/lspsaga.nvim'] = {
-  cmd = 'Lspsaga'
+  -- cmd = 'Lspsaga'
+  event = {'BufReadPre', 'BufNewFile'},
 }
 
 completion['hrsh7th/nvim-compe'] = {
@@ -15,10 +17,10 @@ completion['hrsh7th/nvim-compe'] = {
   config = conf.nvim_compe,
 }
 
-completion['hrsh7th/vim-vsnip'] = {
-  event = 'InsertCharPre',
-  config = conf.vim_vsnip
-}
+-- completion['hrsh7th/vim-vsnip'] = {
+--   event = 'InsertCharPre',
+--   config = conf.vim_vsnip
+-- }
 
 completion['nvim-telescope/telescope.nvim'] = {
   cmd = 'Telescope',
