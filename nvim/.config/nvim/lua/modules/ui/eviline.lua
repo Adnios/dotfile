@@ -10,7 +10,6 @@ gls.left[1] = {
     highlight = {colors.blue,colors.bg}
   },
 }
-
 gls.left[2] = {
   ViMode = {
     provider = function()

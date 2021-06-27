@@ -1,4 +1,4 @@
--- local vim,api = vim,vim.api
+local vim,api = vim,vim.api
 local M = {
   go = {'go run ','go test '};
   lua = {'lua '}

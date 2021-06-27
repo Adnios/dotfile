@@ -87,7 +87,6 @@ local function load_options()
     listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
     pumblend       = 10;
     winblend       = 10;
-    background     = "light";
   }
 
   local bw_local  = {
