@@ -8,8 +8,6 @@ local format = require('modules.completion.format')
 -- vim.cmd('autocmd CursorHold * :Lspsaga show_line_diagnostics')
 vim.cmd('autocmd CursorHold * :Lspsaga show_cursor_diagnostics')
 -- vim.cmd('autocmd CursorMoved * :Lspsaga show_cursor_diagnostics')
--- vim.cmd('autocmd CursorMoved * silent! update')
-vim.cmd('autocmd CursorHold * silent! update')
 
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
