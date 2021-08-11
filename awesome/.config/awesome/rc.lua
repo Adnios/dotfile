@@ -34,8 +34,8 @@ AutorunApps =
   "bash $HOME/.config/i3/bin/keyboard-change",
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "picom &";
+  -- "redshift";
   "xautolock -time 60 -locker lock &"
-  -- "redshift"
 }
 
 if Autorun then

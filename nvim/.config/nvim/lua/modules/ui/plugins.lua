@@ -5,6 +5,10 @@ ui['glepnir/zephyr-nvim'] = {
   config = [[vim.cmd('colorscheme zephyr')]]
 }
 
+ui['folke/tokyonight.nvim'] = {
+  -- config = [[vim.cmd('colorscheme tokyonight')]]
+}
+
 ui['glepnir/dashboard-nvim'] = {
   config = conf.dashboard
 }
@@ -16,7 +20,6 @@ ui['glepnir/galaxyline.nvim'] = {
 }
 
 ui['lukas-reineke/indent-blankline.nvim'] = {
-  branch = 'lua',
   evnet = 'BufReadPre',
   config = conf.indent_blakline
 }
