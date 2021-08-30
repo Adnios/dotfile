@@ -5,13 +5,55 @@ function config.galaxyline()
 end
 
 function config.nvim_bufferline()
-  require('bufferline').setup{
+  -- require('bufferline').setup{
+  --   options = {
+  --     modified_icon = '✥',
+  --     buffer_close_icon = 'x',
+  --     mappings = true,
+  --     always_show_bufferline = false,
+  --   }
+  -- }
+  require('bufferline').setup {
     options = {
-      modified_icon = '✥',
-      buffer_close_icon = 'x',
-      mappings = true,
-      always_show_bufferline = false,
-    }
+      right_mouse_command = 'vert sbuffer %d',
+      show_close_icon = false,
+      ---based on https://github.com/kovidgoyal/kitty/issues/957
+      separator_style = os.getenv 'KITTY_WINDOW_ID' and 'slant' or 'padded_slant',
+      diagnostics = 'nvim_lsp',
+      -- diagnostics_indicator = diagnostics_indicator,
+      -- custom_filter = custom_filter,
+      offsets = {
+        {
+          filetype = 'undotree',
+          text = 'Undotree',
+          highlight = 'PanelHeading',
+          padding = 1,
+        },
+        {
+          filetype = 'NvimTree',
+          text = 'Explorer',
+          highlight = 'PanelHeading',
+          padding = 1,
+        },
+        {
+          filetype = 'DiffviewFiles',
+          text = 'Diff View',
+          highlight = 'PanelHeading',
+          padding = 1,
+        },
+        {
+          filetype = 'flutterToolsOutline',
+          text = 'Flutter Outline',
+          highlight = 'PanelHeading',
+        },
+        {
+          filetype = 'packer',
+          text = 'Packer',
+          highlight = 'PanelHeading',
+          padding = 1,
+        },
+      },
+    },
   }
 end
 

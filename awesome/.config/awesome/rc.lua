@@ -405,6 +405,11 @@ globalkeys = gears.table.join(
 		-- 	function()
 		-- 		awful.util.spawn("light -U 5")
 		-- 	end),
+    awful.key({""}, "XF86AudioMicMute",
+    function ()
+      awful.util.spawn("amixer set Capture toggle")
+    end
+    ),
     awful.key({""},"XF86AudioMute",
     function()
       awful.util.spawn("pamixer --toggle-mute")
@@ -465,10 +470,23 @@ globalkeys = gears.table.join(
               {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
-              {description = "swap with next client by index", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
-              {description = "swap with previous client by index", group = "client"}),
+    -- awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
+    --           {description = "swap with next client by index", group = "client"}),
+    -- awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
+    --           {description = "swap with previous client by index", group = "client"}),
+    -- refactor
+    awful.key({ modkey, "Shift"   }, "j",
+        function ()
+          awful.client.swap.byidx(1)
+          awful.client.focus.byidx(-1)
+        end,
+        {description = "swap with next client by index", group = "client"}),
+    awful.key({ modkey, "Shift"   }, "k",
+        function ()
+          awful.client.swap.byidx(-1)
+          awful.client.focus.byidx(1)
+        end,
+        {description = "swap with previous client by index", group = "client"}),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,

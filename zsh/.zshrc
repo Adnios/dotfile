@@ -163,8 +163,3 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
-export XDG_CONFIG_HOME="$HOME/.config"
-export DOTFILES=$HOME/.dotfiles
-export PROJECTS_DIR=$HOME/Desktop/projects
-export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal
