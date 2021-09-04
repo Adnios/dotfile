@@ -332,6 +332,9 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
+    -- todo_widget
+    local todo_widget = require("awesome-wm-widgets.todo-widget.todo")
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -345,6 +348,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
+            todo_widget(),
             mybattery,
             time,
             mytextclock,
