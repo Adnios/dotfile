@@ -22,6 +22,10 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 local xrandr = require("xrandr")
+-- https://github.com/guotsuan/eminent.git
+require("eminent")
+-- https://github.com/guotsuan/awesome-revelation
+local revelation=require("awesome-revelation")
 
 -- ME
 ---{{{ auto start
@@ -77,6 +81,7 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
 beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
+revelation.init()
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -398,6 +403,16 @@ local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightne
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     -- my keybinding
+    -- revelation
+    -- awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
+    -- awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+    -- awful.key({ modkey,           }, "e",      revelation),
+    -- awful.key({ modkey,           }, "j",
+    -- function ()
+    --     awful.client.focus.byidx( 1)
+    --     if client.focus then client.focus:raise() end
+    -- end),
     -- 降低屏幕亮度
     awful.key({""}, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
     awful.key({""}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
@@ -561,6 +576,7 @@ globalkeys = gears.table.join(
     -- Menubar using rofi
     -- awful.key({ modkey }, "p", function() menubar.show() end,
     --           {description = "show the menubar", group = "launcher"})
+
 )
 
 clientkeys = gears.table.join(
