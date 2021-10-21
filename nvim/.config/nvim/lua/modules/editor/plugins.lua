@@ -6,9 +6,16 @@ editor['Raimondi/delimitMate'] = {
   config = conf.delimimate,
 }
 
-editor['rhysd/accelerated-jk'] = {
-  opt = true
-}
+-- editor['rhysd/accelerated-jk'] = {
+--   opt = true
+-- }
+-- editor['PHSix/faster.nvim'] = {
+--   event = {"VimEnter *"},
+--   config = function ()
+--     vim.api.nvim_set_keymap('n', 'j', '<Plug>(faster_move_j)', {noremap=false, silent=true})
+--     vim.api.nvim_set_keymap('n', 'k', '<Plug>(faster_move_k)', {noremap=false, silent=true})
+--   end
+-- }
 
 editor['norcalli/nvim-colorizer.lua'] = {
   -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},

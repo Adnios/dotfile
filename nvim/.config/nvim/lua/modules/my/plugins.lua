@@ -11,9 +11,9 @@ my['kevinhwang91/rnvimr'] = {
   event = 'BufReadPre'
 } ]]
 
-my['junegunn/vim-peekaboo'] = {
-  event = 'BufReadPre'
-}
+-- my['junegunn/vim-peekaboo'] = {
+--   event = 'BufReadPre'
+-- }
 
 my['thinca/vim-quickrun'] = {
   cmd = 'QuickRun',
@@ -35,6 +35,11 @@ my['airblade/vim-rooter'] = {
 my['akinsho/nvim-toggleterm.lua'] = {
   cmd = 'ToggleTerm',
   config = conf.toggleterm
+}
+
+my['lervag/vimtex'] = {
+  -- ft = 'tex',
+  config = conf.vimtex
 }
 
 return my

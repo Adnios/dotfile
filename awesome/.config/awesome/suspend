@@ -1,0 +1,1 @@
+xautolock -time 30 -locker "systemctl suspend" &

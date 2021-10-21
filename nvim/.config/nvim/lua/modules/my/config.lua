@@ -14,18 +14,6 @@ function config.quickrun()
   vim.g.quickrun_no_default_key_mappings = 1
 end
 
--- I do not want to install texlive which is too big
---[[ function config.vimtex()
-  -- " let g:tex_flavor='latex'
-  -- " let g:tex_flavor='XeLaTex'
-  -- set conceallevel=1
-  vim.g.tex_flavor='xelatex'
-  vim.g.vimtex_view_method='zathura'
-  vim.g.vimtex_quickfix_mode=0
-  vim.g.tex_conceal='abdmg'
-  vim.g.vimtex_compiler_progname = 'nvr'
-end ]]
-
 function config.lastplace()
   vim.g.lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
   vim.g.lastplace_ignore_buftype = "quickfix,nofile,help"
@@ -44,5 +32,25 @@ function config.toggleterm()
     direction = large_screen and "vertical" or "horizontal"
   }
 end
+
+function config.vimtex()
+  vim.g.tex_flavor='xelatex'
+  vim.g.vimtex_view_method = 'zathura'
+  vim.g.vimtex_quickfix_mode=0
+  vim.g.tex_conceal='abdmg'
+  vim.g.vimtex_compiler_progname = 'nvr'
+end
+-- I do not want to install texlive which is too big
+--[[ function config.vimtex()
+  -- " let g:tex_flavor='latex'
+  -- " let g:tex_flavor='XeLaTex'
+  -- set conceallevel=1
+  vim.g.tex_flavor='xelatex'
+  vim.g.vimtex_view_method='zathura'
+  vim.g.vimtex_quickfix_mode=0
+  vim.g.tex_conceal='abdmg'
+  vim.g.vimtex_compiler_progname = 'nvr'
+end ]]
+
 
 return config

@@ -2,8 +2,10 @@ local global = require('core.global')
 
 local function bind_option(options)
   for k, v in pairs(options) do
-    if v == true or v == false then
+    if v == true then
       vim.cmd('set ' .. k)
+    elseif v == false then
+      vim.cmd('set no' .. k)
     else
       vim.cmd('set ' .. k .. '=' .. v)
     end
@@ -13,7 +15,7 @@ end
 local function load_options()
   local global_local = {
     termguicolors  = true;
-    mouse          = "nv";
+    mouse          = "a";
     errorbells     = true;
     visualbell     = true;
     hidden         = true;
@@ -83,10 +85,12 @@ local function load_options()
     equalalways    = false;
     laststatus     = 2;
     display        = "lastline";
-    showbreak      = "↳  ";
+    -- showbreak      = "↳";
     listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
     pumblend       = 10;
     winblend       = 10;
+    autoread       = true;
+    autowrite      = true;
   }
 
   local bw_local  = {
@@ -100,13 +104,13 @@ local function load_options()
     shiftwidth     = 2;
     softtabstop    = -1;
     breakindentopt = "shift:2,min:20";
-    wrap           = false;
+    wrap           = true;
     linebreak      = true;
     number         = true;
     colorcolumn    = "80";
     foldenable     = true;
     signcolumn     = "yes";
-    conceallevel   = 2;
+    conceallevel   = 0;
     concealcursor  = "niv";
   }
 

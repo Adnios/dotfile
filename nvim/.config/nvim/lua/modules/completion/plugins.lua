@@ -1,26 +1,32 @@
 local completion = {}
 local conf = require('modules.completion.config')
 
-completion['neovim/nvim-lspconfig'] = {
-  -- event = 'BufReadPre',
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.nvim_lsp,
-}
-
-completion['glepnir/lspsaga.nvim'] = {
-  -- cmd = 'Lspsaga'
-  event = {'BufReadPre', 'BufNewFile'},
-}
-
-completion['hrsh7th/nvim-compe'] = {
-  event = 'InsertEnter',
-  config = conf.nvim_compe,
-}
+-- completion['neovim/nvim-lspconfig'] = {
+--   -- event = 'BufReadPre',
+--   event = {'BufReadPre', 'BufNewFile'},
+--   config = conf.nvim_lsp,
+-- }
+--
+-- completion['glepnir/lspsaga.nvim'] = {
+--   -- cmd = 'Lspsaga'
+--   event = {'BufReadPre', 'BufNewFile'},
+-- }
+--
+-- completion['hrsh7th/nvim-compe'] = {
+--   event = 'InsertEnter',
+--   config = conf.nvim_compe,
+-- }
 
 -- completion['hrsh7th/vim-vsnip'] = {
 --   event = 'InsertCharPre',
 --   config = conf.vim_vsnip
 -- }
+
+completion['neoclide/coc.nvim'] = {
+  branch = 'release',
+  config = conf.coc,
+  run = 'yarn install --frozen-lockfile'
+}
 
 completion['nvim-telescope/telescope.nvim'] = {
   cmd = 'Telescope',

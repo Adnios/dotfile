@@ -72,4 +72,8 @@ function config.emmet()
   vim.g.user_emmet_mode = 'i'
 end
 
+function config.nvim_lsp()
+  require('modules.completion.coc')
+end
+
 return config

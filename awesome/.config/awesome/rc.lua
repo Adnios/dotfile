@@ -39,7 +39,8 @@ AutorunApps =
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "picom &";
   -- "redshift";
-  "xautolock -time 60 -locker lock &"
+  "bash $HOME/.config/awesome/suspend"
+  -- "xautolock -time 30 -locker lock &"
 }
 
 if Autorun then
@@ -109,7 +110,7 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -209,7 +210,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.      v     
     -- awful.tag({ "1  ", "2  ", "3  ", "4  ", "5  ", "6  ", "7  ", "8  ", "9  "}, s,awful.layout.layouts[1])
     -- use medium.com to get some icons ✍ ⚓ ⚡ ⚪. ⚽ ⛄ ⛅ ⛔ ⛪ ⛳ ⛵ ⛺ ⛽ ☕ ⚫ ☔ ♿️ ⛲ ⚡
-    awful.tag({ "1 😍 ", "2 😄 ", "3 😫 ", "4 🎉 ", "5 ❤️ ", "6  😮 ", "7 😃 ", "8 😎 ", "9 👏 "}, s,awful.layout.layouts[1])
+    --👏
+    awful.tag({ "1 😍 ", "2 😄 ", "3 😫 ", "4 🎉 ", "5 ❤️ ", "6  😮 ", "7 😃 ", "8 😎 ", "9 ⛽ "}, s,awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -394,8 +396,8 @@ end)
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 5, awful.tag.viewnext),
+    awful.button({ }, 4, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -452,6 +454,16 @@ globalkeys = gears.table.join(
       -- io.popen("rofi -show drun")
       io.popen("rofi -combi-modi drun,run,ssh -mesg -show combi -modi combi")
     end),
+    awful.key({modkey}, "'",
+    function (  )
+      -- io.popen("rofi -show drun")
+      io.popen("rofi -show filebrowser")
+    end),
+    awful.key({modkey}, "/",
+    function (  )
+      -- io.popen("rofi -show drun")
+      io.popen("rofi-bluetooth")
+    end),
     -- use rofi to run scrcpy and sndcpy
     -- awful.key({modkey}, "]",
     --   function ()
@@ -463,6 +475,11 @@ globalkeys = gears.table.join(
     --     awful.util.spawn("kitty --dump-commands sndcpy")
     --   end
     -- ),
+    -- vscode
+    awful.key({ modkey}, "\\",
+    function ()
+      io.popen("code")
+    end),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -777,6 +794,7 @@ awful.rules.rules = {
         class = {
           -- add
           "scrcpy",
+          "Nautilus",
           -- "wechat.exe",
           -- "tim.exe",
           -- "Wine",

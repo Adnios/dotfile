@@ -46,4 +46,12 @@ ui['lewis6991/gitsigns.nvim'] = {
 --   config = conf.rainbow
 -- }
 
+ui['folke/zen-mode.nvim'] = {
+  opt = true,
+  cmd = 'ZenMode',
+  config = function ()
+    require('zen-mode').setup {}
+  end
+}
+
 return ui
