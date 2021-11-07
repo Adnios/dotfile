@@ -5,9 +5,8 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
--- begin
+
 local lain = require("lain")
--- end
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
@@ -21,15 +20,16 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-local xrandr = require("xrandr")
 -- https://github.com/guotsuan/eminent.git
 -- require("eminent")
 -- https://github.com/guotsuan/awesome-revelation
 -- local revelation=require("awesome-revelation")
 
--- ME
+-- screen
+local xrandr = require("xrandr")
+local foggy = require('foggy')
+
 ---{{{ auto start
--- 添加自启动
 Autorun = true
 AutorunApps =
 {
@@ -120,6 +120,7 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
+   {"screen", function () foggy.menu(s) end},
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
@@ -206,13 +207,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
-
-    -- Each screen has its own tag table.      v     
-    -- awful.tag({ "1  ", "2  ", "3  ", "4  ", "5  ", "6  ", "7  ", "8  ", "9  "}, s,awful.layout.layouts[1])
-    -- use medium.com to get some icons ✍ ⚓ ⚡ ⚪. ⚽ ⛄ ⛅ ⛔ ⛪ ⛳ ⛵ ⛺ ⛽ ☕ ⚫ ☔ ♿️ ⛲ ⚡
-    --👏
     awful.tag({ "1 😍 ", "2 😄 ", "3 😫 ", "4 🎉 ", "5 ❤️ ", "6  😮 ", "7 😃 ", "8 😎 ", "9 ⛽ "}, s,awful.layout.layouts[1])
-
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -251,15 +246,6 @@ awful.screen.connect_for_each_screen(function(s)
             widget:set_markup(("📝MEM:".. mem_now.used .. "MB "))
         end
     })
-    -- not working
-    -- local mytemp = lain.widget.temp({
-    --   settings = function ()
-    --     timeout = 2
-    --     -- tempfile = "/sys/devices/virtual/thermal/thermal_zone0/temp"
-    --     -- tempfile = "/sys/class/hwmon/hwmon0/temp1_input"
-    --     widget:set_markup(" ⛺️TEMP:" .. coretemp_now .. "°C ")
-    --   end
-    -- })
     -- 声音
     local volume = lain.widget.alsa({
         settings = function()
@@ -276,11 +262,6 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
-    local bat = lain.widget.bat({
-        settings = function()
-          widget:set_markup(" 🔋Bat ")
-        end
-    })
     local time = lain.widget.bat({
         settings = function()
           widget:set_markup(" ⏰")
@@ -339,9 +320,6 @@ awful.screen.connect_for_each_screen(function(s)
         end
     })
 
-    -- todo_widget
-    local todo_widget = require("awesome-wm-widgets.todo-widget.todo")
-
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -355,7 +333,6 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
-            todo_widget(),
             mybattery,
             time,
             mytextclock,
@@ -418,14 +395,6 @@ globalkeys = gears.table.join(
     -- 降低屏幕亮度
     awful.key({""}, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
     awful.key({""}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
-		-- awful.key({""},"XF86MonBrightnessUp",
-		-- 	function()
-		-- 		awful.util.spawn("light -A 5")
-		-- 	end),
-		-- awful.key({""},"XF86MonBrightnessDown",
-		-- 	function()
-		-- 		awful.util.spawn("light -U 5")
-		-- 	end),
     awful.key({""}, "XF86AudioMicMute",
     function ()
       awful.util.spawn("amixer set Capture toggle")
@@ -562,7 +531,9 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+    -- screen
     awful.key({modkey, "Shift"}, "p", function() xrandr.xrandr() end),
+    awful.key({modkey, "Control"}, "p", foggy.menu),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -974,4 +945,3 @@ screen.connect_signal("arrange", function (s)
         end
     end
 end)
-
