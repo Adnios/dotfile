@@ -882,7 +882,9 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
+    -- awful.titlebar(c) : setup {
+    -- change height
+    awful.titlebar(c, {size=15}) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
