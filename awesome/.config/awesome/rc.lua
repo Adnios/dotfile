@@ -371,11 +371,11 @@ end)
 
 
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 5, awful.tag.viewnext),
-    awful.button({ }, 4, awful.tag.viewprev)
-))
+-- root.buttons(gears.table.join(
+--     awful.button({ }, 3, function () mymainmenu:toggle() end),
+--     awful.button({ }, 5, awful.tag.viewnext),
+--     awful.button({ }, 4, awful.tag.viewprev)
+-- ))
 -- }}}
 
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
@@ -795,7 +795,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false }
+      }, properties = { titlebars_enabled = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.

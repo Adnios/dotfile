@@ -38,7 +38,8 @@ alias lt="ls --tree"
 alias nvim="fq && nvim"
 # https://aduros.com/blog/hacking-i3-window-swallowing/
 # alias sxiv="$I3BIN/i3-tabbed sxiv"
-alias ssh="export TERM=xterm-256color && kitty +kitten ssh"
+alias ssh="export TERM=xterm && kitty +kitten ssh"
+# alias ssh="export TERM=xterm-256color && kitty +kitten ssh"
 
 fq(){
 export HTTP_PROXY='http://127.0.0.1:12333'
