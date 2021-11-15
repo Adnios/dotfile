@@ -23,9 +23,7 @@ bindkey ";" autosuggest-accept
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
 export REACT_EDITOR="nvim"
-# export TERM=xterm
-
-
+# export TERM=xterm-256color
 
 alias r=ranger
 alias t="conda activate base && tmux"
@@ -40,10 +38,9 @@ alias lt="ls --tree"
 alias nvim="fq && nvim"
 # https://aduros.com/blog/hacking-i3-window-swallowing/
 # alias sxiv="$I3BIN/i3-tabbed sxiv"
-alias ssh="export TERM=xterm && kitty +kitten ssh"
+alias ssh="export TERM=xterm-256color && kitty +kitten ssh"
 
 fq(){
-# I need proxy all the time in terminal
 export HTTP_PROXY='http://127.0.0.1:12333'
 export HTTPS_PROXY='http://127.0.0.1:12333'
 export ALL_PROXY='socks5://127.0.0.1:1080'
