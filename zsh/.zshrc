@@ -126,7 +126,8 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 # ranger
 set RANGER_LOAD_DEFAULT_RC = FALSE
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.config/i3/bin/:$PATH
 export PATH=/home/herewj/bin:$PATH
 
 # export PATH=$PATH:/opt/cuda/bin
@@ -163,4 +164,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-

@@ -20,7 +20,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-require("awesome-remember-geometry")
+-- require("awesome-remember-geometry")
 
 -- https://github.com/guotsuan/eminent.git
 -- require("eminent")
@@ -933,7 +933,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 ---- 内边框
 beautiful.useless_gap = 2
 beautiful.gap_single_client = true
--- 外边框, 只有一个窗口时不加边框
+-- No borders if only one tiled client
 screen.connect_signal("arrange", function (s)
     -- bug 在tag上右击，tag为空时，selected_tag报错
     -- local max = s.selected_tag.layout.name == "max"
@@ -949,3 +949,32 @@ screen.connect_signal("arrange", function (s)
         end
     end
 end)
+
+-- Titlebars only on floating windows
+-- reference: https://www.reddit.com/r/awesomewm/comments/box4jk/my_functional_dynamic_border_gap_and_titlebar/
+--[[ client.connect_signal("property::floating", function(c)
+    if c.floating then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end)
+
+function dynamic_title(c)
+    if c.floating or c.first_tag.layout.name == "floating" then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end
+
+tag.connect_signal("property::layout", function(t)
+    local clients = t:clients()
+    for k,c in pairs(clients) do
+        if c.floating or c.first_tag.layout.name == "floating" then
+            awful.titlebar.show(c)
+        else
+            awful.titlebar.hide(c)
+        end
+    end
+end) --]]
