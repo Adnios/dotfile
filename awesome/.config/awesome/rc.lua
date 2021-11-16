@@ -20,6 +20,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+require("awesome-remember-geometry")
+
 -- https://github.com/guotsuan/eminent.git
 -- require("eminent")
 -- https://github.com/guotsuan/awesome-revelation
@@ -888,6 +890,8 @@ client.connect_signal("request::titlebars", function(c)
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
+            awful.titlebar.widget.stickybutton   (c),
+            awful.titlebar.widget.ontopbutton    (c),
             layout  = wibox.layout.fixed.horizontal
         },
         { -- Middle
@@ -901,8 +905,6 @@ client.connect_signal("request::titlebars", function(c)
         { -- Right
             awful.titlebar.widget.floatingbutton (c),
             awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
             awful.titlebar.widget.closebutton    (c),
             layout = wibox.layout.fixed.horizontal()
         },
