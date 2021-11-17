@@ -889,10 +889,10 @@ client.connect_signal("request::titlebars", function(c)
     awful.titlebar(c, {size=15}) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
+            -- buttons = buttons,
             awful.titlebar.widget.stickybutton   (c),
             awful.titlebar.widget.ontopbutton    (c),
-            layout  = wibox.layout.fixed.horizontal
+            layout  = wibox.layout.fixed.horizontal()
         },
         { -- Middle
             { -- Title
