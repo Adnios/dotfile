@@ -46,9 +46,9 @@ AutorunApps =
 }
 
 if Autorun then
-	for app = 1, #AutorunApps do
-		awful.util.spawn_with_shell(AutorunApps[app])
-	end
+  for app = 1, #AutorunApps do
+    awful.util.spawn_with_shell(AutorunApps[app])
+  end
 end
 ---}}}
 
@@ -128,8 +128,8 @@ myawesomemenu = {
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end },
-	 {"poweroff",terminal .. " -e  poweroff"},
-	 {"reboot",terminal .. " -e  reboot"}
+   {"poweroff",terminal .. " -e  poweroff"},
+   {"reboot",terminal .. " -e  reboot"}
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -415,10 +415,10 @@ globalkeys = gears.table.join(
       awful.util.spawn("pamixer --decrease 5")
     end),
     -- 截屏
-		awful.key({modkey, "Control"},"a",
-			function()
-				awful.util.spawn("flameshot gui")
-			end),
+    awful.key({modkey, "Control"},"a",
+      function()
+        awful.util.spawn("flameshot gui")
+      end),
     -- rofi
     awful.key({modkey}, ";",
     function (  )
@@ -694,7 +694,134 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 -- }}}
 
+
+-- {{{ Signals
+-- Signal function to execute when a new client appears.
+client.connect_signal("manage", function (c)
+    -- Set the windows at the slave,
+    -- i.e. put it at the end of others instead of setting it master.
+    -- if not awesome.startup then awful.client.setslave(c) end
+
+    if awesome.startup
+      and not c.size_hints.user_position
+      and not c.size_hints.program_position then
+        -- Prevent clients from being unreachable after screen count changes.
+        awful.placement.no_offscreen(c)
+    end
+end)
+
+-- Add a titlebar if titlebars_enabled is set to true in the rules.
+client.connect_signal("request::titlebars", function(c)
+    -- buttons for the titlebar
+    local buttons = gears.table.join(
+        awful.button({ }, 1, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.move(c)
+        end),
+        awful.button({ }, 3, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.resize(c)
+        end)
+    )
+
+    -- awful.titlebar(c) : setup {
+    -- change height
+    awful.titlebar(c, {size=15}) : setup {
+        { -- Left
+            awful.titlebar.widget.iconwidget(c),
+            -- buttons = buttons,
+            awful.titlebar.widget.stickybutton   (c),
+            awful.titlebar.widget.ontopbutton    (c),
+            layout  = wibox.layout.fixed.horizontal()
+        },
+        { -- Middle
+            { -- Title
+                align  = "center",
+                widget = awful.titlebar.widget.titlewidget(c)
+            },
+            buttons = buttons,
+            layout  = wibox.layout.flex.horizontal
+        },
+        { -- Right
+            awful.titlebar.widget.floatingbutton (c),
+            awful.titlebar.widget.maximizedbutton(c),
+            awful.titlebar.widget.closebutton    (c),
+            layout = wibox.layout.fixed.horizontal()
+        },
+        layout = wibox.layout.align.horizontal
+    }
+end)
+
+-- Enable sloppy focus, so that focus follows mouse.
+client.connect_signal("mouse::enter", function(c)
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+end)
+
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+-- }}}
+
+
+-- 窗口圆角
+-- client.connect_signal("manage", function (c)
+--  c.shape = function(cr,w,h)
+--    gears.shape.rounded_rect(cr,w,h,10)
+--  end
+-- end)
+
+-- 窗口规则
+---- 内边框
+beautiful.useless_gap = 2
+beautiful.gap_single_client = true
+-- No borders if only one tiled client
+screen.connect_signal("arrange", function (s)
+    -- bug 在tag上右击，tag为空时，selected_tag报错
+    -- local max = s.selected_tag.layout.name == "max"
+    local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
+    -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
+    for _, c in pairs(s.clients) do
+        -- if (max or only_one) and not c.floating or c.maximized then
+        -- c.class == 'Wine' or c.instance == 'tim.exe'
+        if (only_one) and not c.floating or c.maximized or c.class == 'Wine' then
+            c.border_width = 0
+        else
+            c.border_width = beautiful.border_width
+        end
+    end
+end)
+
+-- Titlebars only on floating windows
+-- reference: https://www.reddit.com/r/awesomewm/comments/box4jk/my_functional_dynamic_border_gap_and_titlebar/
+--[[ client.connect_signal("property::floating", function(c)
+    if c.floating then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end)
+
+function dynamic_title(c)
+    if c.floating or c.first_tag.layout.name == "floating" then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end
+
+tag.connect_signal("property::layout", function(t)
+    local clients = t:clients()
+    for k,c in pairs(clients) do
+        if c.floating or c.first_tag.layout.name == "floating" then
+            awful.titlebar.show(c)
+        else
+            awful.titlebar.hide(c)
+        end
+    end
+end) --]]
+
+
 -- {{{ Rules
+-- move Rules section to below to make it work well
 -- https://github.com/lilydjwg/myawesomerc/blob/master/rc.lua
 local old_filter = awful.client.focus.filter
 function myfocus_filter(c)
@@ -740,6 +867,7 @@ function myfocus_filter(c)
   end
 end
 awful.client.focus.filter = myfocus_filter
+
 
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
@@ -822,6 +950,7 @@ awful.rules.rules = {
         -- Also for deepin-music, removing borders and floating pop-ups
         focusable = true,
         floating = true,
+        titlebars_enabled = false,
         border_width = 0,
       }
     },
@@ -854,127 +983,3 @@ awful.rules.rules = {
     --   }},
 }
 -- }}}
-
--- {{{ Signals
--- Signal function to execute when a new client appears.
-client.connect_signal("manage", function (c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
-
-    if awesome.startup
-      and not c.size_hints.user_position
-      and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
-    end
-end)
-
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
-
-    -- awful.titlebar(c) : setup {
-    -- change height
-    awful.titlebar(c, {size=15}) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            -- buttons = buttons,
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            layout  = wibox.layout.fixed.horizontal()
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
-
--- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
-
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
-
-
--- 窗口圆角
--- client.connect_signal("manage", function (c)
--- 	c.shape = function(cr,w,h)
--- 		gears.shape.rounded_rect(cr,w,h,10)
--- 	end
--- end)
-
--- 窗口规则
----- 内边框
-beautiful.useless_gap = 2
-beautiful.gap_single_client = true
--- No borders if only one tiled client
-screen.connect_signal("arrange", function (s)
-    -- bug 在tag上右击，tag为空时，selected_tag报错
-    -- local max = s.selected_tag.layout.name == "max"
-    local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
-    -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
-    for _, c in pairs(s.clients) do
-        -- if (max or only_one) and not c.floating or c.maximized then
-        -- c.class == 'Wine' or c.instance == 'tim.exe'
-        if (only_one) and not c.floating or c.maximized or c.class == 'Wine' then
-            c.border_width = 0
-        else
-            c.border_width = beautiful.border_width
-        end
-    end
-end)
-
--- Titlebars only on floating windows
--- reference: https://www.reddit.com/r/awesomewm/comments/box4jk/my_functional_dynamic_border_gap_and_titlebar/
---[[ client.connect_signal("property::floating", function(c)
-    if c.floating then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
-    end
-end)
-
-function dynamic_title(c)
-    if c.floating or c.first_tag.layout.name == "floating" then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
-    end
-end
-
-tag.connect_signal("property::layout", function(t)
-    local clients = t:clients()
-    for k,c in pairs(clients) do
-        if c.floating or c.first_tag.layout.name == "floating" then
-            awful.titlebar.show(c)
-        else
-            awful.titlebar.hide(c)
-        end
-    end
-end) --]]
