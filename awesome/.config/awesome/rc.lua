@@ -36,7 +36,8 @@ Autorun = true
 AutorunApps =
 {
   "nm-applet --sm-disable &",
-  "blueman-applet &",
+  -- "blueman-applet &",
+  "blueberry-tray &",
   "bash $HOME/.config/i3/bin/keyboard-change",
   "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "picom &";
