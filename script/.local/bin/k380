@@ -4,8 +4,10 @@ bluetoothctl connect 34:88:5D:D6:B6:EB
 
 echo "k380 connected"
 
-sleep 1
+i="0"
 
+while [ $i -lt 10 ]
+do
 COUNT=$(ps -ef |grep xcape |grep -v "grep" |wc -l)
 xset r rate 300 50
 setxkbmap -layout us -option ctrl:nocaps
@@ -15,3 +17,6 @@ if [ $COUNT -eq 0 ]; then
   xcape -e 'Alt_L=Control_L|Q'
 fi
 echo "keyboard change success"
+sleep 2
+i=$[$i+1]
+done
