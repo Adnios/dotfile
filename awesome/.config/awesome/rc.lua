@@ -777,13 +777,13 @@ beautiful.gap_single_client = true
 -- No borders if only one tiled client
 screen.connect_signal("arrange", function (s)
     -- bug 在tag上右击，tag为空时，selected_tag报错
-    -- local max = s.selected_tag.layout.name == "max"
+    local max = s.selected_tag.layout.name == "max"
     local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
     -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
     for _, c in pairs(s.clients) do
-        -- if (max or only_one) and not c.floating or c.maximized then
+        if (max or only_one) and not c.floating or c.maximized or c.class == 'Wine' then
         -- c.class == 'Wine' or c.instance == 'tim.exe'
-        if (only_one) and not c.floating or c.maximized or c.class == 'Wine' then
+        -- if (only_one) and not c.floating or c.maximized or c.class == 'Wine' then
             c.border_width = 0
         else
             c.border_width = beautiful.border_width
