@@ -791,36 +791,6 @@ screen.connect_signal("arrange", function (s)
     end
 end)
 
--- Titlebars only on floating windows
--- reference: https://www.reddit.com/r/awesomewm/comments/box4jk/my_functional_dynamic_border_gap_and_titlebar/
---[[ client.connect_signal("property::floating", function(c)
-    if c.floating then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
-    end
-end)
-
-function dynamic_title(c)
-    if c.floating or c.first_tag.layout.name == "floating" then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
-    end
-end
-
-tag.connect_signal("property::layout", function(t)
-    local clients = t:clients()
-    for k,c in pairs(clients) do
-        if c.floating or c.first_tag.layout.name == "floating" then
-            awful.titlebar.show(c)
-        else
-            awful.titlebar.hide(c)
-        end
-    end
-end) --]]
-
-
 -- {{{ Rules
 -- move Rules section to below to make it work well
 -- https://github.com/lilydjwg/myawesomerc/blob/master/rc.lua
@@ -896,7 +866,6 @@ awful.rules.rules = {
         class = {
           -- add
           "scrcpy",
-          "Nautilus",
           -- "wechat.exe",
           -- "tim.exe",
           -- "Wine",
@@ -933,11 +902,16 @@ awful.rules.rules = {
     { rule = { class = "scrcpy" },
       properties = { screen = 1, tag = "7 😃 " } },
     { rule = { class = "netease-cloud-music" },
-      properties = { screen = 1, tag = "7 😃 " } },
+      properties = {
+        screen = 1, tag = "7 😃 ",
+        titlebars_enabled = false
+      } 
+    },
 
     { rule_any = {
       instance = {
           'qq.exe', 'QQ.exe', 'TIM.exe', 'tim.exe',
+          "Nautilus",
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
           'wechat.exe', 'wechatupdate.exe',

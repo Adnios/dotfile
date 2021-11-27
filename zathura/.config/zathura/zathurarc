@@ -1,2 +1,4 @@
 set synctex true
 set synctex-editor-command "nvr --remote-silent %f -c %l"
+# copy selection to system clipboard
+set selection-clipboard clipboard

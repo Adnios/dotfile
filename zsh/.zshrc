@@ -164,3 +164,8 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# texlive
+export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH    
+export INFOPATH=$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info
+export MANPATH=$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man
