@@ -754,9 +754,9 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
+--[[ client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+end) ]]
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
@@ -905,13 +905,14 @@ awful.rules.rules = {
       properties = {
         screen = 1, tag = "7 😃 ",
         titlebars_enabled = false
-      } 
+      }
     },
 
     { rule_any = {
       instance = {
           'qq.exe', 'QQ.exe', 'TIM.exe', 'tim.exe',
           "Nautilus",
+          "telegram",
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
           'wechat.exe', 'wechatupdate.exe',
