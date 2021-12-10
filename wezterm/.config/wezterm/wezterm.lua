@@ -41,23 +41,25 @@ return {
     }),
     front_end = "OpenGL",
     font_size = 10,
-    -- color_scheme = "nord",
+    -- color_scheme = "snazzy",
     enable_tab_bar = true,
     tab_max_width = 20,
     tab_bar_at_bottom = true,
     hide_tab_bar_if_only_one_tab = true,
     colors = {
-        background = "#282828",
-        foreground = "#ebdbb2",
-        -- cursor_bg = "#8ec07c",
-        -- cursor_border = "#8ec07c",
+        foreground = "#c0caf5",
+        background = "#1a1b26",
+        -- cursor_bg = "#c0caf5",
+        -- cursor_border = "#c0caf5",
         cursor_bg = "#ff5555",
         cursor_border = "#ff5555",
-        cursor_fg = "#282828",
-        selection_bg = "#e6d4a3",
-        selection_fg = "#534a42",
-        ansi =    {"#282828", "#cc241d", "#98971a", "#d79921", "#458588", "#b16286", "#689d6a", "#a89984"},
-        brights = {"#928374", "#fb4934", "#b8bb26", "#fabd2f", "#83a598", "#d3869b", "#8ec07c", "#ebdbb2"},
+        cursor_fg = "#1a1b26",
+        selection_bg = "#33467C",
+        selection_fg = "#c0caf5",
+
+        ansi = {"#15162E", "#f7768e", "#9ece6a", "#e0af68", "#7aa2f7", "#bb9af7", "#7dcfff", "#a9b1d6"},
+        brights = {"#414868", "#f7768e", "#9ece6a", "#e0af68", "#7aa2f7", "#bb9af7", "#7dcfff", "#c0caf5"},
+
         tab_bar = {
             background = "#2e3440",
             active_tab = {
@@ -101,8 +103,8 @@ return {
     window_padding = {
       left = 2,
       right = 2,
-      top = 0,
-      bottom = 0,
+      top = 2,
+      bottom = 2,
     },
 
     skip_close_confirmation_for_processes_named = {
