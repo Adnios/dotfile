@@ -23,7 +23,6 @@ bindkey ";" autosuggest-accept
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
 export REACT_EDITOR="nvim"
-# export TERM=xterm-256color
 
 alias r=ranger
 alias t="conda activate base && tmux"
@@ -35,7 +34,7 @@ alias ls="lsd"
 alias ll="ls -l"
 alias la="ls -la"
 alias lt="ls --tree"
-alias nvim="fq && nvim"
+alias nvim="fq && env TERM=wezterm nvim"
 # https://aduros.com/blog/hacking-i3-window-swallowing/
 # alias sxiv="$I3BIN/i3-tabbed sxiv"
 alias ssh="export TERM=xterm && kitty +kitten ssh"

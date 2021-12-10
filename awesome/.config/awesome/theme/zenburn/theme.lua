@@ -15,7 +15,7 @@ theme.wallpaper = themes_path .. "zenburn/big_cat.jpg"
 
 -- {{{ Styles
 -- theme.font       = "FiraCode NF Bold 7"
-theme.font       = "Bold 7"
+theme.font       = "Monospace Bold 7"
 
 -- {{{ Colors
 -- 前两位表示透明度
