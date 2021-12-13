@@ -84,9 +84,12 @@ return {
     },
     -- text_background_opacity = 1.0,
     disable_default_key_bindings = true,
+
+    -- Use ALT instead of SHIFT to bypass application mouse reporting
+    -- Use CTRL+SHIFT+click or SHIFT+click to open url in nvim
+    bypass_mouse_reporting_modifiers = "SHIFT",
     mouse_bindings = {
         {
-
             event = {Up = {streak = 1, button = "Left"}},
             mods = "NONE",
             action = wezterm.action {
@@ -96,20 +99,25 @@ return {
             event = {Up = {streak = 1, button = "Left"}},
             mods = "CTRL",
             action = "OpenLinkAtMouseCursor"
-        }
+        }, {
+          event={Down={streak=1, button="Left"}},
+          mods="CTRL",
+          action="Nop",
+        },
     },
     keys = mykeys,
 
     window_padding = {
-      left = 2,
-      right = 2,
-      top = 2,
-      bottom = 2,
+      left = 0,
+      right = 0,
+      top = 0,
+      bottom = 0,
     },
 
-    skip_close_confirmation_for_processes_named = {
-      "bash", "sh", "zsh", "fish", "tmux", "nvim", "env TERM=wezterm nvim"
-    }
+    window_close_confirmation = "NeverPrompt",
+    -- skip_close_confirmation_for_processes_named = {
+    --   "bash", "sh", "zsh", "fish", "tmux", "nvim", "env TERM=wezterm nvim"
+    -- }
 
     -- window_background_opacity = 0.95
     -- window_background_image = "/home/ayamir/Pictures/wezterm/nord.jpg",
