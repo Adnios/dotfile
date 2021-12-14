@@ -1,22 +1,24 @@
 configuration {
-    modi: "window,drun,ssh";
-   font: "FireCode NF 10";
-    location: 0;
-    yoffset: 0;
-    xoffset: 0;
-   fixed-num-lines: true;
-    show-icons: true;
-    terminal: "kitty";
-    theme: "~/.config/rofi/theme/Arc-Dark.rasi";
+  modi: "window,drun,ssh";
+  font: "FireCode NF 10";
+  location: 0;
+  yoffset: 0;
+  xoffset: 0;
+  fixed-num-lines: true;
+  show-icons: true;
+  /* terminal: "wezterm"; */
+
   timeout {
-      action: "kb-cancel";
-      delay:  0;
+    action: "kb-cancel";
+    delay:  0;
   }
+
   filebrowser {
-      directories-first: true;
-      sorting-method:    "name";
+    directories-first: true;
+    sorting-method:    "name";
   }
 }
 
+@theme "~/.config/rofi/theme/Arc-Dark.rasi"
 /* vim: ft=css
 */
