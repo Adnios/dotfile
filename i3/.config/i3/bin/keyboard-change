@@ -4,5 +4,6 @@ setxkbmap -layout us -option ctrl:nocaps
 if [ $COUNT -eq 0 ]; then
   xcape -e 'Control_L=Escape'
   # xcape -e 'Super_L=Control_L|E'
-  xcape -e 'Alt_L=Control_L|Q'
+  xcape -e 'Alt_R=Control_L|Q'
+  xcape -e 'Alt_L=Alt_L|Shift_L|S'
 fi
