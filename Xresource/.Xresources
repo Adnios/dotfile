@@ -9,4 +9,4 @@ Xft.rgba: rgb
 !! Xcursor (some X11 programs may read it from here, i.e. wezterm)
 !! https://github.com/wez/wezterm/issues/524
 Xcursor.theme: Adwaita
-!! Xcursor.size: 27
+Xcursor.size: 24
