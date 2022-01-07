@@ -86,6 +86,8 @@ return {
     },
     -- text_background_opacity = 1.0,
     disable_default_key_bindings = true,
+    debug_key_events = true,
+    use_fancy_tab_bar = false,
 
     -- Use ALT instead of SHIFT to bypass application mouse reporting
     -- Use CTRL+SHIFT+click or SHIFT+click to open url in nvim

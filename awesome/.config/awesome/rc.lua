@@ -38,7 +38,8 @@ AutorunApps =
   "nm-applet --sm-disable &",
   "blueman-applet &",
   "bash $HOME/.config/i3/bin/keyboard-change",
-  "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
+  -- "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
+  "v2raya --lite",
   "picom &";
   -- "redshift";
   "bash $HOME/.config/awesome/suspend"
