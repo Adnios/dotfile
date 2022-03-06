@@ -11,13 +11,15 @@ plugins=(
   git
   zsh-autosuggestions
   vi-mode
-  zsh-syntax-highlighting
+  # zsh-syntax-highlighting # make zsh-autosuggestions weird
   colored-man-pages
   autojump
 )
 source $ZSH/oh-my-zsh.sh
 
 KEYTIMEOUT=1
+TERM=xterm-256color
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=241,bold,underline"
 bindkey ";" autosuggest-accept
 # Editor
 export EDITOR="nvim"
@@ -29,7 +31,6 @@ alias t="conda activate base && tmux"
 alias ta="t a -t"
 alias tls="t ls"
 alias tn="t new -t"
-alias reload="source ~/.zshrc"
 alias ls="lsd"
 alias ll="ls -l"
 alias la="ls -la"
@@ -42,7 +43,7 @@ alias nvim="fq && env TERM=wezterm nvim"
 
 fq(){
   export HTTP_PROXY='http://127.0.0.1:12333'
-  export HTTPS_PROXY='http://127.0.0.1:12333'
+  export HTTPS_PROXY='http://127.0.0.1:20172'
   export ALL_PROXY='socks5://127.0.0.1:1080'
 }
 
@@ -165,6 +166,6 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # texlive
-export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH    
+export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH
 export INFOPATH=$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info
 export MANPATH=$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man

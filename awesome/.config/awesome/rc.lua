@@ -40,9 +40,9 @@ AutorunApps =
   "bash $HOME/.config/i3/bin/keyboard-change",
   -- "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "v2raya --lite",
-  "picom &";
+  -- "picom &"; -- update 2/28 update, make awwesome wm round conerns
   -- "redshift";
-  "bash $HOME/.config/awesome/suspend"
+  -- "bash $HOME/.config/awesome/suspend"
   -- "xautolock -time 30 -locker lock &"
 }
 
@@ -89,6 +89,7 @@ beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "wezterm"
+-- terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -773,7 +774,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- 窗口规则
 ---- 内边框
-beautiful.useless_gap = 2
+beautiful.useless_gap = 1
 beautiful.gap_single_client = true
 -- No borders if only one tiled client
 screen.connect_signal("arrange", function (s)
@@ -892,7 +893,10 @@ awful.rules.rules = {
           "ConfigManager",  -- Thunderbird's about:config.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
-      }, properties = { floating = true }},
+      }, properties = {
+        floating = true,
+        border_width = 0,
+      }},
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
