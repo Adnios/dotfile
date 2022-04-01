@@ -88,8 +88,8 @@ beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
 -- revelation.init()
 
 -- This is used later as the default terminal and editor to run.
-terminal = "wezterm"
--- terminal = "kitty"
+-- terminal = "wezterm"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -418,7 +418,7 @@ globalkeys = gears.table.join(
       awful.util.spawn("pamixer --decrease 5")
     end),
     -- 截屏
-    awful.key({modkey, "Control"},"a",
+    awful.key({"Mod1", "Control"},"a",
       function()
         awful.util.spawn("flameshot gui")
       end),
@@ -443,12 +443,12 @@ globalkeys = gears.table.join(
       -- io.popen("rofi -show drun")
       io.popen("bash ~/.local/bin/k380")
     end),
-    -- use rofi to run scrcpy and sndcpy
-    -- awful.key({modkey}, "]",
-    --   function ()
-    --     awful.util.spawn("scrcpy")
-    --   end
-    -- ),
+    -- use at dom
+    awful.key({modkey}, "]",
+      function ()
+        awful.util.spawn("scrcpy --tcpip=192.168.1.5")
+      end
+    ),
     -- awful.key({modkey, "Shift"}, "]",
     --   function ()
     --     awful.util.spawn("kitty --dump-commands sndcpy")
