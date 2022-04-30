@@ -20,13 +20,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- require("awesome-remember-geometry")
-
--- https://github.com/guotsuan/eminent.git
--- require("eminent")
--- https://github.com/guotsuan/awesome-revelation
--- local revelation=require("awesome-revelation")
-
 -- screen
 local xrandr = require("xrandr")
 local foggy = require('foggy')
@@ -40,9 +33,9 @@ AutorunApps =
   "bash $HOME/.config/i3/bin/keyboard-change",
   -- "/mnt/d/temp/GitHub/software/electron-ssr-0.2.6.AppImage",
   "v2raya --lite",
-  -- "picom &"; -- update 2/28 update, make awwesome wm round conerns
+  "picom &"; -- update 2/28 update, make awwesome wm round conerns
   -- "redshift";
-  -- "bash $HOME/.config/awesome/suspend"
+  "bash $HOME/.config/awesome/bin/suspend";
   -- "xautolock -time 30 -locker lock &"
 }
 
@@ -81,14 +74,9 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
--- my
--- beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
--- beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
 beautiful.init("~/.config/awesome/theme/zenburn/theme.lua")
--- revelation.init()
 
 -- This is used later as the default terminal and editor to run.
--- terminal = "wezterm"
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
@@ -130,8 +118,8 @@ myawesomemenu = {
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end },
-   {"poweroff",terminal .. " -e  poweroff"},
-   {"reboot",terminal .. " -e  reboot"}
+   { "poweroff", terminal .. " -e  poweroff" },
+   { "reboot", terminal .. " -e  reboot" }
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -211,7 +199,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
-    awful.tag({ "1 😍 ", "2 😄 ", "3 📒 ", "4 🎉 ", "5 ❤️ ", "6  😮 ", "7 😃 ", "8 😎 ", "9 ⛽ "}, s,awful.layout.layouts[1])
+    awful.tag({ "1 😍 ", "2 😄 ", "3 📒 ", "4 🎉 ", "5 ❤️ ", "6  😮 ", "7 😃 ", "8 😎 ", "9 ⛽ ", "10 🐛 "}, s,awful.layout.layouts[1])
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -313,17 +301,6 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a custom bar textbox widget
     s.mybarbox = wibox.widget.textbox()
 
-    -- Spawn bar info
-    local bar_path = "/home/wmoore/Projects/bar/target/release/bar -a -w"
-    awful.spawn.with_line_callback(bar_path, {
-        stdout = function(line)
-            s.mybarbox.markup = line
-        end,
-        stderr = function(line)
-            naughty.notify { text = "ERR: "..line }
-        end
-    })
-
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -338,8 +315,6 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
             mybattery,
-            time,
-            mytextclock,
             cpu,
             cpu_widget({
               width = 20,
@@ -358,14 +333,9 @@ awful.screen.connect_for_each_screen(function(s)
               program = 'light',
               step = 5
             },
-            -- mytemp,
-            -- bat,
-            -- batteryarc_widget({
-            --   show_current_level = true,
-            --   arc_thickness = 2
-            -- }),
-            -- net(),
             s.mybarbox,
+            time,
+            mytextclock,
             wibox.widget.systray(),
             s.mylayoutbox,
         },
@@ -397,7 +367,6 @@ globalkeys = gears.table.join(
     --     awful.client.focus.byidx( 1)
     --     if client.focus then client.focus:raise() end
     -- end),
-    -- 降低屏幕亮度
     awful.key({""}, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
     awful.key({""}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
     awful.key({""}, "XF86AudioMicMute",
@@ -418,7 +387,7 @@ globalkeys = gears.table.join(
       awful.util.spawn("pamixer --decrease 5")
     end),
     -- 截屏
-    awful.key({"Mod1", "Control"},"a",
+    awful.key({"Mod1", "Control"}, "a",
       function()
         awful.util.spawn("flameshot gui")
       end),
@@ -438,23 +407,6 @@ globalkeys = gears.table.join(
       -- io.popen("rofi -show drun")
       io.popen("rofi-bluetooth")
     end),
-    awful.key({modkey}, ".",
-    function (  )
-      -- io.popen("rofi -show drun")
-      io.popen("bash ~/.local/bin/k380")
-    end),
-    -- use at dom
-    awful.key({modkey}, "]",
-      function ()
-        awful.util.spawn("scrcpy --tcpip=192.168.1.5")
-      end
-    ),
-    -- awful.key({modkey, "Shift"}, "]",
-    --   function ()
-    --     awful.util.spawn("kitty --dump-commands sndcpy")
-    --   end
-    -- ),
-
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "p",   awful.tag.viewprev,
@@ -484,19 +436,7 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    -- refactor
-    -- awful.key({ modkey, "Shift"   }, "j",
-    --     function ()
-    --       awful.client.swap.byidx(1)
-    --       awful.client.focus.byidx(-1)
-    --     end,
-    --     {description = "swap with next client by index", group = "client"}),
-    -- awful.key({ modkey, "Shift"   }, "k",
-    --     function ()
-    --       awful.client.swap.byidx(-1)
-    --       awful.client.focus.byidx(1)
-    --     end,
-    --     {description = "swap with previous client by index", group = "client"}),
+    -- switch screen
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
@@ -566,10 +506,6 @@ globalkeys = gears.table.join(
                   }
               end,
               {description = "lua execute prompt", group = "awesome"})
-    -- Menubar using rofi
-    -- awful.key({ modkey }, "p", function() menubar.show() end,
-    --           {description = "show the menubar", group = "launcher"})
-
 )
 
 clientkeys = gears.table.join(
@@ -583,11 +519,7 @@ clientkeys = gears.table.join(
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
-    -- awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-    --           {description = "move to master", group = "client"}),
-    -- personal config
-    -- awful.key({ modkey, "Shift" }, "Return", function (c) awful.client.setslave(c) end,
-    --           {description = "move to slave", group = "client"}),
+
     awful.key({ modkey, "Control" }, "Return",
         function (c)
             if c ~= awful.client.getmaster() then
@@ -632,7 +564,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -764,14 +696,6 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-
--- 窗口圆角
--- client.connect_signal("manage", function (c)
---  c.shape = function(cr,w,h)
---    gears.shape.rounded_rect(cr,w,h,10)
---  end
--- end)
-
 -- 窗口规则
 ---- 内边框
 beautiful.useless_gap = 1
@@ -840,7 +764,6 @@ function myfocus_filter(c)
   end
 end
 awful.client.focus.filter = myfocus_filter
-
 
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
@@ -947,20 +870,5 @@ awful.rules.rules = {
       end
     end,
     },
-
-    -- jetbrains
-    -- { rule = {
-    --     class = "jetbrains-.*",
-    --     instance = "sun-awt-X11-XWindowPeer",
-    --     name = "win.*"
-    --   },
-    --   properties = {
-    --       floating = true,
-    --       focus = true,
-    --       focusable = false,
-    --       ontop = true,
-    --       placement = awful.placement.restore,
-    --       buttons = {}
-    --   }},
 }
 -- }}}
