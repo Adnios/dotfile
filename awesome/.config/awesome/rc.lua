@@ -413,6 +413,15 @@ globalkeys = gears.table.join(
   --     awful.client.focus.byidx( 1)
   --     if client.focus then client.focus:raise() end
   -- end),
+  -- Show/Hide Wibox for teams meeting
+  awful.key({ modkey, "Ctrl" }, "b", function()
+    for s in screen do
+      s.mywibox.visible = not s.mywibox.visible
+      if s.mybottomwibox then
+        s.mybottomwibox.visible = not s.mybottomwibox.visible
+      end
+    end
+  end, { description = "toggle wibox", group = "awesome" }),
   awful.key({ "" }, "XF86MonBrightnessUp", function()
     brightness_widget:inc()
   end, { description = "increase brightness", group = "custom" }),
@@ -886,6 +895,7 @@ awful.rules.rules = {
         "wechatupdate.exe",
         "megasync",
         "kruler",
+        "Cisco AnyConnect Secure Mobility Client",
       },
     },
     properties = {
