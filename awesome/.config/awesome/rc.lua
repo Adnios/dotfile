@@ -34,7 +34,7 @@ AutorunApps = {
   "v2raya --lite",
   "picom &", -- update 2/28 update, make awwesome wm round conerns
   -- "redshift";
-  "bash $HOME/.config/awesome/bin/suspend",
+  -- "bash $HOME/.config/awesome/bin/suspend",
   -- "xautolock -time 30 -locker lock &"
 }
 
