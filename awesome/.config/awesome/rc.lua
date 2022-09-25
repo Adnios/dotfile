@@ -369,7 +369,8 @@ awful.screen.connect_for_each_screen(function(s)
       },
       mem,
       volume_widget {
-        type = "arc",
+        -- type = "arc",
+        type = "icon_and_text",
       },
       volume,
       brightness_widget {
